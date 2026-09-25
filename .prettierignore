@@ -1,0 +1,6 @@
+pnpm-lock.yaml
+**/dist/
+**/server/
+**/.wrangler/
+**/.turbo/
+apps/shell/public/cdn/
