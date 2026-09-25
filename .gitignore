@@ -1,0 +1,11 @@
+node_modules/
+dist/
+apps/*/server/
+.turbo/
+.wrangler/
+.dev.vars
+*.log
+.DS_Store
+tmp/
+test-results/
+playwright-report/
