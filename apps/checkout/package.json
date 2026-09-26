@@ -1,0 +1,29 @@
+{
+  "name": "@tractor/checkout",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "vite build && vite build -c adapters/cloudflare-pages/vite.config.ts && cp .assetsignore dist/",
+    "build.client": "vite build",
+    "build.server": "vite build -c adapters/cloudflare-pages/vite.config.ts",
+    "build.types": "tsc --noEmit",
+    "dev": "vite --mode ssr --port 3003 --strictPort",
+    "lint": "eslint src",
+    "typecheck": "tsc --noEmit",
+    "qwik": "qwik",
+    "start": "wrangler dev --port 3003 --inspector-port 9233"
+  },
+  "devDependencies": {
+    "@builder.io/qwik": "1.20.1",
+    "@builder.io/qwik-city": "1.20.1",
+    "@cloudflare/workers-types": "^4.20250925.0",
+    "@tractor/events": "workspace:*",
+    "@tractor/tsconfig": "workspace:*",
+    "@types/node": "^22.0.0",
+    "eslint-plugin-qwik": "1.20.1",
+    "globals": "^16.4.0",
+    "vite": "7.3.1",
+    "wrangler": "^4.141.0"
+  }
+}

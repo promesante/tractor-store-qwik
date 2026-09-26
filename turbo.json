@@ -19,6 +19,10 @@
     "deploy": {
       "dependsOn": ["build"],
       "cache": false
+    },
+    "start": {
+      "cache": false,
+      "persistent": true
     }
   }
 }

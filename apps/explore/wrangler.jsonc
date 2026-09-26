@@ -1,0 +1,13 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "tractor-explore",
+  "main": "dist/_fragment/explore/_worker.js",
+  "compatibility_date": "2025-09-01",
+  "compatibility_flags": ["nodejs_als"],
+  // Reached only through the shell's service binding.
+  "workers_dev": false,
+  "assets": {
+    "directory": "dist",
+    "binding": "ASSETS",
+  },
+}

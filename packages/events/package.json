@@ -1,0 +1,16 @@
+{
+  "name": "@tractor/events",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "lint": "eslint src",
+    "typecheck": "tsc -p ."
+  },
+  "devDependencies": {
+    "@tractor/tsconfig": "workspace:*"
+  }
+}
