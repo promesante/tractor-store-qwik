@@ -41,30 +41,30 @@ The task plan lives in [PLAN.md](./PLAN.md).
 
 ## 3. Reference implementations
 
-| Reference | What we reuse | What we do differently |
-| --- | --- | --- |
-| `tractor-store-blueprint` | Page and fragment boundaries, markup, CSS, per-team `database.json`, cookie cart format, custom event names, Cloudflare Worker hosting | Real micro frontends instead of a modular monolith |
-| `13-spa-tractor-v2-full` (Picard) | One deployable per team, component split per team | Server rendering instead of a client-only SPA; cart persisted in a cookie instead of in memory |
+| Reference                         | What we reuse                                                                                                                          | What we do differently                                                                         |
+| --------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| `tractor-store-blueprint`         | Page and fragment boundaries, markup, CSS, per-team `database.json`, cookie cart format, custom event names, Cloudflare Worker hosting | Real micro frontends instead of a modular monolith                                             |
+| `13-spa-tractor-v2-full` (Picard) | One deployable per team, component split per team                                                                                      | Server rendering instead of a client-only SPA; cart persisted in a cookie instead of in memory |
 
 ## 4. Decisions
 
-| Aspect | Decision |
-| --- | --- |
-| Frameworks | Qwik 1.x stable with Qwik City. Qwik 2 is still in beta. |
-| Micro frontend framework | `web-fragments` 0.8.x |
-| Rendering | Server-side rendering, resumed in the browser by Qwik |
-| Application shell | Thin shell Worker running the Web Fragments gateway |
-| Server-side integration | Gateway "piercing" of the page fragment that matches the URL |
-| Client-side integration | `<web-fragment src="...">` elements for embedded widgets |
-| Communication | `BroadcastChannel` events, plus HTML attributes from parent to child |
-| Navigation | Multi-page, one page fragment per URL, owned by one team |
-| Styling | Plain CSS per team, copied from the blueprint, isolated by shadow DOM |
-| Design system | Shared Qwik `Button` in `packages/ui` |
-| Static assets | Images, fonts and helper script copied into the shell and served by it |
-| Monorepo | Turborepo with pnpm workspaces |
-| Deployment | Cloudflare Workers, one Worker per system, connected by service bindings |
-| CI/CD | GitHub Actions: checks on every PR, deploy of changed apps on merge to `main` |
-| Preview deploys | Not in scope for now |
+| Aspect                   | Decision                                                                      |
+| ------------------------ | ----------------------------------------------------------------------------- |
+| Frameworks               | Qwik 1.x stable with Qwik City. Qwik 2 is still in beta.                      |
+| Micro frontend framework | `web-fragments` 0.8.x                                                         |
+| Rendering                | Server-side rendering, resumed in the browser by Qwik                         |
+| Application shell        | Thin shell Worker running the Web Fragments gateway                           |
+| Server-side integration  | Gateway "piercing" of the page fragment that matches the URL                  |
+| Client-side integration  | `<web-fragment src="...">` elements for embedded widgets                      |
+| Communication            | `BroadcastChannel` events, plus HTML attributes from parent to child          |
+| Navigation               | Multi-page, one page fragment per URL, owned by one team                      |
+| Styling                  | Plain CSS per team, copied from the blueprint, isolated by shadow DOM         |
+| Design system            | Shared Qwik `Button` in `packages/ui`                                         |
+| Static assets            | Images, fonts and helper script copied into the shell and served by it        |
+| Monorepo                 | Turborepo with pnpm workspaces                                                |
+| Deployment               | Cloudflare Workers, one Worker per system, connected by service bindings      |
+| CI/CD                    | GitHub Actions: checks on every PR, deploy of changed apps on merge to `main` |
+| Preview deploys          | Not in scope for now                                                          |
 
 ## 5. System boundaries
 
@@ -133,12 +133,12 @@ layouts.
 
 Each team registers its route patterns in the gateway.
 
-| Team | Page routes | Widget and asset routes |
-| --- | --- | --- |
-| Explore | `/`, `/products`, `/products/:category`, `/stores` | `/_fragment/explore/*` |
-| Decide | `/product/:id` | `/_fragment/decide/*` |
-| Checkout | `/checkout/*` | `/_fragment/checkout/*` |
-| Inspire | none | `/_fragment/inspire/*` |
+| Team     | Page routes                                        | Widget and asset routes |
+| -------- | -------------------------------------------------- | ----------------------- |
+| Explore  | `/`, `/products`, `/products/:category`, `/stores` | `/_fragment/explore/*`  |
+| Decide   | `/product/:id`                                     | `/_fragment/decide/*`   |
+| Checkout | `/checkout/*`                                      | `/_fragment/checkout/*` |
+| Inspire  | none                                               | `/_fragment/inspire/*`  |
 
 - Widget endpoints, for example: `/_fragment/explore/header`, `/_fragment/explore/footer`,
   `/_fragment/explore/recommendations?skus=...`, `/_fragment/explore/store-picker`,
@@ -154,12 +154,12 @@ Web Fragments runs each fragment's JavaScript in its own iframe realm. Realms do
 same-origin `BroadcastChannel` named `tractor-store`. A tiny `packages/events` package holds
 the typed event contract only, with no runtime logic that couples teams.
 
-| Concept | Blueprint | This implementation |
-| --- | --- | --- |
-| Parent to child: variant change | Full page reload with `?sku=` | Decide re-renders its page and remounts the widgets with a new `src`, for example `?sku=` on add to cart and recommendations |
-| Sibling: add to cart to mini cart | `checkout:cart-updated` DOM event | `checkout:cart-updated` on the channel. Mini cart refetches its state. |
-| Child to parent: store picker to checkout | `explore:store-selected` DOM event | `explore:store-selected` on the channel, with the store id. The checkout form fills in the store id. |
-| Inter-team navigation | Plain links | Plain links. The gateway serves the owning team's page. |
+| Concept                                   | Blueprint                          | This implementation                                                                                                          |
+| ----------------------------------------- | ---------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| Parent to child: variant change           | Full page reload with `?sku=`      | Decide re-renders its page and remounts the widgets with a new `src`, for example `?sku=` on add to cart and recommendations |
+| Sibling: add to cart to mini cart         | `checkout:cart-updated` DOM event  | `checkout:cart-updated` on the channel. Mini cart refetches its state.                                                       |
+| Child to parent: store picker to checkout | `explore:store-selected` DOM event | `explore:store-selected` on the channel, with the store id. The checkout form fills in the store id.                         |
+| Inter-team navigation                     | Plain links                        | Plain links. The gateway serves the owning team's page.                                                                      |
 
 The `<web-fragment>` element does not react to `src` changes, so a parent that needs different
 widget input re-creates the element, for example by keying it on the input.
@@ -236,9 +236,9 @@ tractor-store-qwik/
 
 ## 11. Risks
 
-| Risk | Why it matters | Mitigation |
-| --- | --- | --- |
-| Qwik resumability inside a fragment realm | Qwik's loader listens on `document`, which Web Fragments patches to point at the fragment's shadow root | Proven in the spike task before any feature work |
-| Nested fragments | The header embeds the mini cart, and product detail embeds two other teams' widgets | Proven in the spike task |
-| Only the URL-matched page is server-rendered | Widgets render on the client, so they appear after the page | Reserve widget space with piercing styles to avoid layout shift |
-| Web Fragments is in beta | API changes between minor versions | Pin the exact version |
+| Risk                                         | Why it matters                                                                                          | Mitigation                                                      |
+| -------------------------------------------- | ------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------- |
+| Qwik resumability inside a fragment realm    | Qwik's loader listens on `document`, which Web Fragments patches to point at the fragment's shadow root | Proven in the spike task before any feature work                |
+| Nested fragments                             | The header embeds the mini cart, and product detail embeds two other teams' widgets                     | Proven in the spike task                                        |
+| Only the URL-matched page is server-rendered | Widgets render on the client, so they appear after the page                                             | Reserve widget space with piercing styles to avoid layout shift |
+| Web Fragments is in beta                     | API changes between minor versions                                                                      | Pin the exact version                                           |
