@@ -1,5 +1,5 @@
 {
-  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "tractor-explore",
   "main": "dist/_fragment/explore/_worker.js",
   "compatibility_date": "2025-09-01",

@@ -26,9 +26,6 @@ importers:
       typescript-eslint:
         specifier: ^8.70.1
         version: 8.70.1(eslint@10.11.0)(typescript@5.9.3)
-      wrangler:
-        specifier: ^4.141.0
-        version: 4.141.0(@cloudflare/workers-types@4.20260702.1)
 
   apps/checkout:
     devDependencies:
@@ -113,7 +110,7 @@ importers:
         version: 0.25.12
       wrangler:
         specifier: ^4.141.0
-        version: 4.141.0(@cloudflare/workers-types@4.20260702.1)
+        version: 4.141.0(@cloudflare/workers-types@4.20260702.1)(@types/node@22.20.4)
 
   packages/events:
     devDependencies:
@@ -5284,24 +5281,6 @@ snapshots:
       '@cloudflare/workerd-linux-64': 1.20260925.1
       '@cloudflare/workerd-linux-arm64': 1.20260925.1
       '@cloudflare/workerd-windows-64': 1.20260925.1
-
-  wrangler@4.141.0(@cloudflare/workers-types@4.20260702.1):
-    dependencies:
-      '@cloudflare/kv-asset-handler': 0.5.0
-      '@cloudflare/unenv-preset': 2.16.2(unenv@2.0.0-rc.24)(workerd@1.20260925.1)
-      blake3-wasm: 2.1.5
-      esbuild: 0.28.1
-      miniflare: 5.20260925.0-alpha(@types/node@22.20.4)
-      path-to-regexp: 6.3.0
-      unenv: 2.0.0-rc.24
-      workerd: 1.20260925.1
-    optionalDependencies:
-      '@cloudflare/workers-types': 4.20260702.1
-      fsevents: 2.3.3
-    transitivePeerDependencies:
-      - '@types/node'
-      - bufferutil
-      - utf-8-validate
 
   wrangler@4.141.0(@cloudflare/workers-types@4.20260702.1)(@types/node@22.20.4):
     dependencies:
