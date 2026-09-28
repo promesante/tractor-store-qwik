@@ -160,6 +160,9 @@ These rules come from the [spike](./docs/spike.md) and apply to every Qwik team 
 - The server build defines `import.meta.env.BASE_URL` as `/_fragment/<team>/`, so Qwik's
   preloader fetches its bundle graph from the team's path.
 - Qwik City trailing slashes are turned off.
+- Each app deploys as a Cloudflare Worker with static assets. Its entry is our own
+  `src/entry.worker.ts`, which calls Qwik City's request handler. Qwik's Cloudflare Pages
+  adapter is not used, since Cloudflare directs new projects to Workers.
 
 ### 6.4 Communication
 
@@ -223,7 +226,8 @@ tractor-store-qwik/
 
 ## 8. Local development
 
-- Node 22.12 or newer is required.
+- Node 22.12 or newer is required. `engine-strict` in `.npmrc` makes pnpm stop right away on an
+  older version.
 - `pnpm install` then `pnpm start` builds every app and runs each Worker in its own
   `wrangler dev` process through Turborepo. The store is opened at http://localhost:3000.
 - Service bindings work locally through wrangler's dev registry, so the shell uses the same

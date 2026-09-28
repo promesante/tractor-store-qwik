@@ -33,10 +33,16 @@ Web Fragments, and a widget from another team can be nested inside a page fragme
    Setting Qwik's client `outDir` to `dist/_fragment/<team>` keeps routes at their natural paths
    and serves chunks from the team prefix. `entry.ssr.tsx` sets Qwik's `base` to match.
 3. **The server build overrides `import.meta.env.BASE_URL`.** Qwik's renderer builds the
-   bundle-graph URL from the base URL. The Cloudflare adapter config defines it as
+   bundle-graph URL from the base URL. The Worker's server build config defines it as
    `/_fragment/<team>/` for the server build only.
 4. **Qwik City trailing slashes are off.** Otherwise `/checkout/cart` answers with a redirect to
    `/checkout/cart/`, which the gateway reports as a failed fragment fetch.
+5. **Our own Worker entry replaces Qwik's Cloudflare Pages adapter.** Qwik City 1.x only ships a
+   Pages adapter. It worked as a build tool, but it also wrote Pages-only files such as
+   `_routes.json` and `404.html`, which had to be hidden from Workers static assets. Each team
+   app now has `src/entry.worker.ts`, about 80 lines, which connects Qwik City's
+   platform-neutral request handler to a Workers `fetch` handler. `vite.worker.config.ts`
+   builds it to `server/entry.worker.js`. Behavior in the browser check did not change.
 
 ## Other findings
 

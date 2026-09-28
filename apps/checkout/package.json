@@ -4,9 +4,9 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "vite build && vite build -c adapters/cloudflare-pages/vite.config.ts && cp .assetsignore dist/",
+    "build": "vite build && vite build -c vite.worker.config.ts && cp .assetsignore dist/",
     "build.client": "vite build",
-    "build.server": "vite build -c adapters/cloudflare-pages/vite.config.ts",
+    "build.server": "vite build -c vite.worker.config.ts",
     "build.types": "tsc --noEmit",
     "dev": "vite --mode ssr --port 3003 --strictPort",
     "lint": "eslint src",

@@ -1,6 +1,2 @@
-# Files in dist that are not served as static assets.
-**/_worker.js
-**/_routes.json
-**/_headers
-**/_redirects
-**/404.html
+# Build files in dist that must not be served as static assets.
+**/q-manifest.json

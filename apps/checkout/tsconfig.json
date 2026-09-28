@@ -5,5 +5,5 @@
     "types": ["node", "vite/client", "@cloudflare/workers-types"],
     "paths": { "~/*": ["./src/*"] }
   },
-  "include": ["src", "adapters", "./*.d.ts", "./*.config.ts"]
+  "include": ["src", "./*.d.ts", "./*.config.ts"]
 }
