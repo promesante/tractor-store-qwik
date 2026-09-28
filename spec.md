@@ -6,6 +6,10 @@ built with [Web Fragments](https://web-fragments.dev/), [Qwik](https://qwik.dev/
 
 The task plan lives in [PLAN.md](./PLAN.md).
 
+The finished store will be submitted to the Implementations list of
+[The Tractor Store 2.0](https://micro-frontends.org/tractor-store/). Section 12 lists what that
+requires. The site's text is kept in [new-requirements.md](./new-requirements.md).
+
 ## 1. Original brief
 
 > I want to start a project here cloning logic and micro frontend architecture, proposed in
@@ -38,6 +42,32 @@ The task plan lives in [PLAN.md](./PLAN.md).
 - Run the whole store locally with one command.
 - Bonus: a shared pattern library with the Button, and a fourth "Inspire" system that owns
   recommendations.
+- Get listed as an implementation on the Tractor Store 2.0 site, with a live demo.
+
+### 2.1 Features every implementation must have
+
+From the Tractor Store site. An end user must not be able to tell implementations apart.
+
+| Feature                                                                          | Owner             | Task      |
+| -------------------------------------------------------------------------------- | ----------------- | --------- |
+| Boundary toggle, to show which team owns what                                    | Shell             | T4        |
+| Complete shop: home, category, stores, product detail, cart, checkout, thank-you | All teams         | T6 to T10 |
+| Header and footer, the same on every page except checkout                        | Explore           | T6        |
+| Recommendations matched by color, from the selected product and cart contents    | Explore           | T7        |
+| Shopping cart: add and remove tractors, mini cart updates                        | Checkout          | T8, T10   |
+| Checkout form with an embedded store picker owned by Explore                     | Checkout, Explore | T7, T10   |
+| Confirmation confetti, powered by an external dependency                         | Checkout          | T10       |
+
+### 2.2 Principles every implementation must follow
+
+- **Team boundaries.** Explore owns home, product lists, stores and recommendations. Decide owns
+  the product page. Checkout owns cart, checkout and thanks.
+- **Framework-agnostic integration.** Teams must be able to change their tech stack
+  independently. Web Fragments isolates each team's JavaScript, so this holds at runtime. Shared
+  packages must not force a framework on a team: `packages/events` is plain TypeScript, and a
+  team leaving Qwik would stop using the Qwik Button in `packages/ui` and keep only its CSS.
+- **Independent deployment.** Each team deploys its own Worker, without touching other teams'
+  code.
 
 ## 3. Reference implementations
 
@@ -264,3 +294,39 @@ tractor-store-qwik/
 | Nested fragments                             | The header embeds the mini cart, and product detail embeds two other teams' widgets                     | Resolved in the [spike](./docs/spike.md)                           |
 | Only the URL-matched page is server-rendered | Widgets render on the client, so they appear after the page                                             | Reserve widget space with piercing styles to avoid layout shift    |
 | Web Fragments is in beta                     | API changes between minor versions                                                                      | Pin the exact version                                              |
+
+## 12. Publishing to the Tractor Store site
+
+The site's
+[contribution steps](https://micro-frontends.org/tractor-store/#contribute), applied here.
+
+| Step on the site                                                      | How this project meets it                                                                                           |
+| --------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| Base the repository on an existing Tractor Store repository           | Based on the blueprint: its data, CSS and static assets. The README credits it, and its MIT license notice is kept. |
+| Implement every feature                                               | Section 2.1, tracked in [PLAN.md](./PLAN.md)                                                                        |
+| Describe the implementation in README.md and fill out the specs table | Task T13                                                                                                            |
+| Submit by email with a repository link, plus a live demo              | Task T14. The live demo is the shell Worker's public URL.                                                           |
+
+### 12.1 Specs table
+
+The README uses the same table as the other implementations. Planned values:
+
+| Aspect                     | Solution                                                             |
+| -------------------------- | -------------------------------------------------------------------- |
+| 🛠️ Frameworks, Libraries   | Qwik, Qwik City, Web Fragments, Vite, Turborepo                      |
+| 📝 Rendering               | SSR with resumability                                                |
+| 🐚 Application Shell       | Thin shell Worker running the Web Fragments gateway                  |
+| 🧩 Client-Side Integration | Web Fragments: isolated JavaScript realm and shadow DOM per fragment |
+| 🧩 Server-Side Integration | Web Fragments gateway piercing of the page fragment                  |
+| 📣 Communication           | BroadcastChannel events, URL parameters on widget fragments          |
+| 🗺️ Navigation              | MPA, one page fragment per URL                                       |
+| 🎨 Styling                 | Self-contained CSS per team, isolated by shadow DOM                  |
+| 🍱 Design System           | Shared Qwik Button package                                           |
+| 🔮 Discovery               | Route table in the gateway, Cloudflare service bindings              |
+| 🚚 Deployment              | Serverless (Cloudflare Workers), GitHub Actions                      |
+| 👩‍💻 Local Development       | Turborepo and wrangler dev                                           |
+
+### 12.2 Footer
+
+The footer keeps the Tractor Store initiative block untouched, as the blueprint asks. Only its
+credits part changes, to name this tech stack and link to this repository.
