@@ -10,22 +10,23 @@ Tasks for building the store described in [spec.md](./spec.md).
 
 ## Status
 
-| Task | Title                                             | Depends on | Status    |
-| ---- | ------------------------------------------------- | ---------- | --------- |
-| T0   | Spec and plan                                     | none       | Done      |
-| T1   | Monorepo scaffold and CI                          | T0         | Done      |
-| T2   | Spike: Qwik inside Web Fragments                  | T1         | In review |
-| T3   | Cloudflare Workers and deploy workflow            | T2         | To do     |
-| T4   | Shell: assets, base styles, boundary helper       | T3         | To do     |
-| T5   | Shared UI: Button                                 | T1         | To do     |
-| T6   | Explore: pages, header and footer                 | T4, T5     | To do     |
-| T7   | Explore widgets: recommendations and store picker | T6         | To do     |
-| T8   | Checkout: cart state, add to cart, mini cart      | T4, T5     | To do     |
-| T9   | Decide: product detail page                       | T7, T8     | To do     |
-| T10  | Checkout: cart, checkout and thank-you pages      | T7, T8     | To do     |
-| T11  | End-to-end tests in CI                            | T9, T10    | To do     |
-| T12  | Bonus: Inspire team owns recommendations          | T11        | To do     |
-| T13  | Docs: README, tech stack table, footer credits    | T11        | To do     |
+| Task | Title                                             | Depends on | Status |
+| ---- | ------------------------------------------------- | ---------- | ------ |
+| T0   | Spec and plan                                     | none       | Done   |
+| T1   | Monorepo scaffold and CI                          | T0         | Done   |
+| T2   | Spike: Qwik inside Web Fragments                  | T1         | Done   |
+| T3   | Cloudflare Workers and deploy workflow            | T2         | To do  |
+| T4   | Shell: assets, base styles, boundary helper       | T3         | To do  |
+| T5   | Shared UI: Button                                 | T1         | To do  |
+| T6   | Explore: pages, header and footer                 | T4, T5     | To do  |
+| T7   | Explore widgets: recommendations and store picker | T6         | To do  |
+| T8   | Checkout: cart state, add to cart, mini cart      | T4, T5     | To do  |
+| T9   | Decide: product detail page                       | T7, T8     | To do  |
+| T10  | Checkout: cart, checkout and thank-you pages      | T7, T8     | To do  |
+| T11  | End-to-end tests in CI                            | T9, T10    | To do  |
+| T12  | Bonus: Inspire team owns recommendations          | T11        | To do  |
+| T13  | Docs: README, specs table, footer credits         | T11        | To do  |
+| T14  | Submit to the Tractor Store site                  | T3, T13    | To do  |
 
 ## Phase 0: Foundation
 
@@ -74,6 +75,8 @@ piercing, Qwik click handlers work in both fragments, and the event reaches the 
 ### T4. Shell: assets, base styles, boundary helper
 
 - Copy the blueprint's `public/cdn` folder, about 38 MB, into the shell's static assets.
+- Add a `LICENSE` file: MIT for this project, keeping neuland's copyright notice for the
+  blueprint data, CSS and assets reused here.
 - Shell HTML with meta tags, favicon links, Raleway `@font-face` and global base styles.
 - Load `helper.js` so the team boundary toggle works.
 - Gateway error fallbacks and piercing styles that reserve space for widgets.
@@ -155,8 +158,27 @@ stock and recommendations.
 - Move the recommendations widget and its data from Explore to Inspire.
 - Update the gateway routes and embedding pages.
 
-### T13. Docs: README, tech stack table, footer credits
+### T13. Docs: README, specs table, footer credits
 
-- README in the Tractor Store format with the tech stack table and how to run locally.
-- Update the footer credits with this implementation's tech stack.
-- Lighthouse score of the deployed store.
+Prepares the submission described in [spec.md, section 12](./spec.md#12-publishing-to-the-tractor-store-site).
+
+- README in the same format as the other implementations: title, live demo link, "About This
+  Implementation" with the specs table, what is special about this take, limitations, how to
+  run locally, and about the author.
+- State that the project is based on the blueprint.
+- Check every feature in [spec.md, section 2.1](./spec.md#21-features-every-implementation-must-have)
+  against the deployed store.
+- Update the footer credits with this tech stack and repository link. Keep the initiative block
+  untouched.
+- Lighthouse score of the deployed store in the README.
+
+**Done when** the README is complete and every feature works on the live demo.
+
+### T14. Submit to the Tractor Store site
+
+- Claude drafts the submission email: repository link, live demo link, and a short summary of
+  what is special about this implementation.
+- The repo owner sends it to the Tractor Store maintainers, following
+  [the contribution steps](https://micro-frontends.org/tractor-store/#contribute).
+
+**Done when** the implementation appears in the site's Implementations list.
