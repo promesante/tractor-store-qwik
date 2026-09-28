@@ -10,22 +10,22 @@ Tasks for building the store described in [spec.md](./spec.md).
 
 ## Status
 
-| Task | Title                                             | Depends on | Status |
-| ---- | ------------------------------------------------- | ---------- | ------ |
-| T0   | Spec and plan                                     | none       | Done   |
-| T1   | Monorepo scaffold and CI                          | T0         | Done   |
-| T2   | Spike: Qwik inside Web Fragments                  | T1         | Done   |
-| T3   | Cloudflare Workers and deploy workflow            | T2         | To do  |
-| T4   | Shell: assets, base styles, boundary helper       | T3         | To do  |
-| T5   | Shared UI: Button                                 | T1         | To do  |
-| T6   | Explore: pages, header and footer                 | T4, T5     | To do  |
-| T7   | Explore widgets: recommendations and store picker | T6         | To do  |
-| T8   | Checkout: cart state, add to cart, mini cart      | T4, T5     | To do  |
-| T9   | Decide: product detail page                       | T7, T8     | To do  |
-| T10  | Checkout: cart, checkout and thank-you pages      | T7, T8     | To do  |
-| T11  | End-to-end tests in CI                            | T9, T10    | To do  |
-| T12  | Bonus: Inspire team owns recommendations          | T11        | To do  |
-| T13  | Docs: README, tech stack table, footer credits    | T11        | To do  |
+| Task | Title                                             | Depends on | Status    |
+| ---- | ------------------------------------------------- | ---------- | --------- |
+| T0   | Spec and plan                                     | none       | Done      |
+| T1   | Monorepo scaffold and CI                          | T0         | Done      |
+| T2   | Spike: Qwik inside Web Fragments                  | T1         | In review |
+| T3   | Cloudflare Workers and deploy workflow            | T2         | To do     |
+| T4   | Shell: assets, base styles, boundary helper       | T3         | To do     |
+| T5   | Shared UI: Button                                 | T1         | To do     |
+| T6   | Explore: pages, header and footer                 | T4, T5     | To do     |
+| T7   | Explore widgets: recommendations and store picker | T6         | To do     |
+| T8   | Checkout: cart state, add to cart, mini cart      | T4, T5     | To do     |
+| T9   | Decide: product detail page                       | T7, T8     | To do     |
+| T10  | Checkout: cart, checkout and thank-you pages      | T7, T8     | To do     |
+| T11  | End-to-end tests in CI                            | T9, T10    | To do     |
+| T12  | Bonus: Inspire team owns recommendations          | T11        | To do     |
+| T13  | Docs: README, tech stack table, footer credits    | T11        | To do     |
 
 ## Phase 0: Foundation
 
