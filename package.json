@@ -12,7 +12,8 @@
     "lint": "turbo run lint && pnpm lint:root",
     "lint:root": "prettier --check .",
     "typecheck": "turbo run typecheck",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "start": "turbo run build && turbo run start"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

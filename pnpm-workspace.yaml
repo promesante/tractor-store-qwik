@@ -1,3 +1,9 @@
 packages:
   - "apps/*"
   - "packages/*"
+
+# Dependencies allowed to run install scripts.
+onlyBuiltDependencies:
+  - esbuild
+  - sharp
+  - workerd

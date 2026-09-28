@@ -146,13 +146,31 @@ Each team registers its route patterns in the gateway.
 - Each Qwik app builds its client assets under its own `/_fragment/<team>/` base path, so asset
   requests route back to the owning team.
 - Anything unmatched falls through to the shell's static assets, for example `/cdn/img/...`.
+- The gateway has one fragment config per team, because it matches by path first. A widget
+  element's `fragment-id` only has to be unique on the page, for example `checkout-mini-cart`.
+
+### 6.3.1 How a team app is built
+
+These rules come from the [spike](./docs/spike.md) and apply to every Qwik team app.
+
+- Qwik renders into a `<div>` container, and the team root renders no `<html>`, `<head>` or
+  `<body>`. The shell owns the document.
+- Qwik's client output goes to `dist/_fragment/<team>/`, so chunks are served from
+  `/_fragment/<team>/build/` while routes keep their natural paths.
+- The server build defines `import.meta.env.BASE_URL` as `/_fragment/<team>/`, so Qwik's
+  preloader fetches its bundle graph from the team's path.
+- Qwik City trailing slashes are turned off.
+- Each app deploys as a Cloudflare Worker with static assets. Its entry is our own
+  `src/entry.worker.ts`, which calls Qwik City's request handler. Qwik's Cloudflare Pages
+  adapter is not used, since Cloudflare directs new projects to Workers.
 
 ### 6.4 Communication
 
 Web Fragments runs each fragment's JavaScript in its own iframe realm. Realms do not share
 `window` or its event listeners, so the blueprint's DOM custom events are replaced by a
 same-origin `BroadcastChannel` named `tractor-store`. A tiny `packages/events` package holds
-the typed event contract only, with no runtime logic that couples teams.
+the typed event contract plus two thin helpers, `publish` and `subscribe`. It has no state and
+no logic that couples teams.
 
 | Concept                                   | Blueprint                          | This implementation                                                                                                          |
 | ----------------------------------------- | ---------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
@@ -208,11 +226,15 @@ tractor-store-qwik/
 
 ## 8. Local development
 
-- `pnpm install` then `pnpm dev` starts every app through Turborepo.
+- Node 22.12 or newer is required. `engine-strict` in `.npmrc` makes pnpm stop right away on an
+  older version.
+- `pnpm install` then `pnpm start` builds every app and runs each Worker in its own
+  `wrangler dev` process through Turborepo. The store is opened at http://localhost:3000.
+- Service bindings work locally through wrangler's dev registry, so the shell uses the same
+  bindings locally and in production.
+- `pnpm dev` runs each team app with the Vite dev server on its own port, for working on one
+  team in isolation. That mode does not go through the shell.
 - Local ports: shell 3000, explore 3001, decide 3002, checkout 3003, inspire 3004.
-- In local development the shell gateway uses the localhost URLs of the team apps as endpoints.
-  In production it uses service bindings.
-- The store is opened at http://localhost:3000.
 
 ## 9. CI/CD
 
@@ -236,9 +258,9 @@ tractor-store-qwik/
 
 ## 11. Risks
 
-| Risk                                         | Why it matters                                                                                          | Mitigation                                                      |
-| -------------------------------------------- | ------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------- |
-| Qwik resumability inside a fragment realm    | Qwik's loader listens on `document`, which Web Fragments patches to point at the fragment's shadow root | Proven in the spike task before any feature work                |
-| Nested fragments                             | The header embeds the mini cart, and product detail embeds two other teams' widgets                     | Proven in the spike task                                        |
-| Only the URL-matched page is server-rendered | Widgets render on the client, so they appear after the page                                             | Reserve widget space with piercing styles to avoid layout shift |
-| Web Fragments is in beta                     | API changes between minor versions                                                                      | Pin the exact version                                           |
+| Risk                                         | Why it matters                                                                                          | Mitigation                                                         |
+| -------------------------------------------- | ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------ |
+| Qwik resumability inside a fragment realm    | Qwik's loader listens on `document`, which Web Fragments patches to point at the fragment's shadow root | Resolved in the [spike](./docs/spike.md), with a `<div>` container |
+| Nested fragments                             | The header embeds the mini cart, and product detail embeds two other teams' widgets                     | Resolved in the [spike](./docs/spike.md)                           |
+| Only the URL-matched page is server-rendered | Widgets render on the client, so they appear after the page                                             | Reserve widget space with piercing styles to avoid layout shift    |
+| Web Fragments is in beta                     | API changes between minor versions                                                                      | Pin the exact version                                              |

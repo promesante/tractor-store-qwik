@@ -1,0 +1,9 @@
+{
+  "extends": "@tractor/tsconfig/qwik.json",
+  "compilerOptions": {
+    "lib": ["ES2022", "DOM", "DOM.Iterable", "WebWorker"],
+    "types": ["node", "vite/client", "@cloudflare/workers-types"],
+    "paths": { "~/*": ["./src/*"] }
+  },
+  "include": ["src", "./*.d.ts", "./*.config.ts"]
+}

@@ -1,0 +1,22 @@
+{
+  "name": "@tractor/shell",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build-client.js",
+    "dev": "node build-client.js && wrangler dev --port 3000 --var MODE:development",
+    "lint": "eslint src",
+    "typecheck": "tsc --noEmit",
+    "start": "wrangler dev --port 3000 --inspector-port 9230 --var MODE:development"
+  },
+  "dependencies": {
+    "web-fragments": "0.8.2"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20250925.0",
+    "@tractor/tsconfig": "workspace:*",
+    "esbuild": "^0.25.0",
+    "wrangler": "^4.141.0"
+  }
+}
