@@ -300,12 +300,12 @@ tractor-store-qwik/
 The site's
 [contribution steps](https://micro-frontends.org/tractor-store/#contribute), applied here.
 
-| Step on the site                                                      | How this project meets it                                                                                                                           |
-| --------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Base the repository on an existing Tractor Store repository           | Built from the blueprint's data, CSS and static assets, without a git fork. The README states this, and the blueprint's MIT license notice is kept. |
-| Implement every feature                                               | Section 2.1, tracked in [PLAN.md](./PLAN.md)                                                                                                        |
-| Describe the implementation in README.md and fill out the specs table | Task T13                                                                                                                                            |
-| Submit by email with a repository link, plus a live demo              | Task T14. The live demo is the shell Worker's public URL.                                                                                           |
+| Step on the site                                                      | How this project meets it                                                                                           |
+| --------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| Base the repository on an existing Tractor Store repository           | Based on the blueprint: its data, CSS and static assets. The README credits it, and its MIT license notice is kept. |
+| Implement every feature                                               | Section 2.1, tracked in [PLAN.md](./PLAN.md)                                                                        |
+| Describe the implementation in README.md and fill out the specs table | Task T13                                                                                                            |
+| Submit by email with a repository link, plus a live demo              | Task T14. The live demo is the shell Worker's public URL.                                                           |
 
 ### 12.1 Specs table
 
