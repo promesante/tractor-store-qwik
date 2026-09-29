@@ -20,19 +20,39 @@ export const TEAM_ROUTES: Record<Team, string[]> = {
   checkout: ["/checkout/:_*", "/_fragment/checkout/:_*"],
 };
 
+/**
+ * Gateway config for one team.
+ *
+ * When a team answers a page request with 404, the whole response becomes the
+ * shell's 404 page. Any other failure keeps the shell and shows a short notice
+ * where the team's page would be.
+ */
 export function fragmentConfig(
   team: Team,
   endpoint: FragmentConfig["endpoint"],
+  notFound: () => Promise<Response>,
 ): FragmentConfig {
   return {
     fragmentId: team,
     routePatterns: TEAM_ROUTES[team],
     endpoint,
-    onSsrFetchError: () => ({
-      response: new Response(
-        `<p data-boundary="${team}">Sorry, this part of the store is not available right now.</p>`,
-        { headers: { "content-type": "text/html;charset=UTF-8" } },
-      ),
-    }),
+    onSsrFetchError: async (_req, failed) => {
+      if (failed instanceof Response && failed.status === 404) {
+        const page = await notFound();
+        return {
+          response: new Response(page.body, {
+            status: 404,
+            headers: { "content-type": "text/html;charset=UTF-8" },
+          }),
+          overrideResponse: true,
+        };
+      }
+      return {
+        response: new Response(
+          `<p data-boundary="${team}">Sorry, this part of the store is not available right now.</p>`,
+          { headers: { "content-type": "text/html;charset=UTF-8" } },
+        ),
+      };
+    },
   };
 }

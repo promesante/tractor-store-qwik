@@ -13,5 +13,10 @@ export default [
         tsconfigRootDir: import.meta.dirname,
       },
     },
+    rules: {
+      // Images live in the shell's /cdn folder, not in this app, so they
+      // can't be imported for Qwik's image optimization.
+      "qwik/jsx-img": "off",
+    },
   },
 ];
