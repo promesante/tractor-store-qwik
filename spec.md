@@ -226,8 +226,13 @@ widget input re-creates the element, for example by keying it on the input.
 - Shadow DOM isolates fragment styles, so each fragment ships its own CSS, including the shared
   Button styles from `packages/ui`.
 - The shell declares `@font-face` for Raleway and the global base styles. Inherited properties
-  such as `font-family` flow into fragments. Font faces must be declared at document level,
-  which is why this lives in the shell.
+  such as `font-family` and custom properties such as `--outer-space` flow into fragments. Font
+  faces must be declared at document level, which is why this lives in the shell.
+- Rules that match elements, such as `* { box-sizing: border-box }` or `p { line-height }`, do
+  not cross shadow boundaries. Each team's CSS repeats them for its own fragment.
+- The boundary toggle uses the blueprint's `helper.js` unchanged. The shell adds a small script
+  that copies the helper's styles into every nested shadow root, because the helper only
+  reaches the first level.
 - The blueprint's `public/cdn` folder, about 38 MB of images, fonts and `helper.js`, is copied
   into the shell's static assets and served from `/cdn/*`. No hotlinking to the blueprint host.
 
