@@ -84,6 +84,7 @@ piercing, Qwik click handlers work in both fragments, and the event reaches the 
 - Load `helper.js` so the team boundary toggle works.
 - Copy the helper's styles into nested shadow roots, which the helper cannot reach.
 - A 404 page for unknown paths. Gateway error fallbacks were added in T2.
+- A first `README.md`, based on the blueprint's, with instructions to run the store locally.
 - Space reservation for widgets moves to the tasks that build each widget, because the widget
   sizes are not known yet.
 
@@ -168,7 +169,7 @@ stock and recommendations.
 
 Prepares the submission described in [spec.md, section 12](./spec.md#12-publishing-to-the-tractor-store-site).
 
-- README in the same format as the other implementations: title, live demo link, "About This
+- Complete the README started in T4, in the same format as the other implementations: title, live demo link, "About This
   Implementation" with the specs table, what is special about this take, limitations, how to
   run locally, and about the author.
 - State that the project is based on the blueprint.
