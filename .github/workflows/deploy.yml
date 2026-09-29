@@ -1,0 +1,56 @@
+name: Deploy
+
+# Deploys the apps affected by each push to main, as Cloudflare Workers.
+# Team Workers deploy before the shell, because the shell's service bindings
+# must point at Workers that already exist.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      all:
+        description: Deploy every app, not only the affected ones
+        type: boolean
+        default: false
+
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+env:
+  TURBO_TELEMETRY_DISABLED: 1
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Select apps to deploy
+        id: apps
+        env:
+          ALL: ${{ inputs.all }}
+          BEFORE: ${{ github.event.before }}
+        run: node scripts/deploy-targets.mjs
+
+      - name: Deploy team Workers
+        if: steps.apps.outputs.teams != ''
+        run: pnpm exec turbo run deploy ${{ steps.apps.outputs.teams }}
+
+      - name: Deploy shell Worker
+        if: steps.apps.outputs.shell == 'true'
+        run: pnpm exec turbo run deploy --filter=@tractor/shell

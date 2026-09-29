@@ -23,6 +23,10 @@
     "start": {
       "cache": false,
       "persistent": true
+    },
+    "deploy:check": {
+      "dependsOn": ["build"],
+      "cache": false
     }
   }
 }
