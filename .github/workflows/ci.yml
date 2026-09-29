@@ -37,4 +37,5 @@ jobs:
           fi
 
       - run: pnpm lint:root
-      - run: pnpm turbo run lint typecheck build ${{ steps.filter.outputs.args }}
+      # deploy:check runs a wrangler dry-run deploy. It needs no Cloudflare credentials.
+      - run: pnpm turbo run lint typecheck build deploy:check ${{ steps.filter.outputs.args }}

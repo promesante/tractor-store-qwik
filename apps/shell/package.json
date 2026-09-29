@@ -8,7 +8,9 @@
     "dev": "node build-client.js && wrangler dev --port 3000 --var MODE:development",
     "lint": "eslint src",
     "typecheck": "tsc --noEmit",
-    "start": "wrangler dev --port 3000 --inspector-port 9230 --var MODE:development"
+    "start": "wrangler dev --port 3000 --inspector-port 9230 --var MODE:development",
+    "deploy": "wrangler deploy",
+    "deploy:check": "wrangler deploy --dry-run --outdir .wrangler/dry-run"
   },
   "dependencies": {
     "web-fragments": "0.8.2"

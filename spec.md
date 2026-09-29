@@ -268,11 +268,17 @@ tractor-store-qwik/
 
 ## 9. CI/CD
 
-- **Pull requests** run lint, typecheck and build through Turborepo, only for packages affected by
-  the change.
-- **Merges to `main`** deploy only the apps affected by the change, using the official Cloudflare
-  Wrangler GitHub Action. Team Workers deploy before the shell, so the shell never binds to a
-  missing Worker.
+- **Pull requests** run lint, typecheck, build and a wrangler dry-run deploy through Turborepo,
+  only for packages affected by the change. The dry run checks each Worker's config and bundle
+  without Cloudflare credentials.
+- **Pushes to `main`** deploy only the apps affected since the previous commit on `main`.
+  `scripts/deploy-targets.mjs` asks Turborepo which apps changed, and the workflow runs
+  `wrangler deploy` for them through Turborepo. A change that touches no app, such as a docs
+  change, deploys nothing.
+- **Order.** Team Workers deploy before the shell, so the shell never binds to a missing Worker.
+- **Full deploy.** Running the Deploy workflow by hand with "all" checked deploys every app.
+- **Public URL.** Only the shell Worker is public, on `tractor-shell.<account subdomain>.workers.dev`.
+  Team Workers have no public URL and no preview URLs.
 - **Secrets** `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` are set in the GitHub repo
   settings by the repo owner.
 - **Preview deploys** per PR are out of scope for now. Service bindings would still point at the
