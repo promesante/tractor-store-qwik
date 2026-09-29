@@ -1,5 +1,6 @@
 import { component$, useSignal, useVisibleTask$ } from "@builder.io/qwik";
 import { subscribe } from "@tractor/events";
+import { Button } from "@tractor/ui";
 
 /**
  * Spike widget. Counts "checkout:cart-updated" events received over the
@@ -20,9 +21,13 @@ export default component$(() => {
   return (
     <div data-boundary="checkout" class="spike-mini-cart">
       <span id="mini-cart-received">events: {received.value}</span>{" "}
-      <button id="mini-cart-counter" onClick$={() => clicks.value++}>
+      <Button
+        id="mini-cart-counter"
+        size="small"
+        onClick$={() => clicks.value++}
+      >
         mini cart clicks: {clicks.value}
-      </button>
+      </Button>
     </div>
   );
 });

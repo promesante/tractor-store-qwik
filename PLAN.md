@@ -16,8 +16,8 @@ Tasks for building the store described in [spec.md](./spec.md).
 | T1   | Monorepo scaffold and CI                          | T0         | Done      |
 | T2   | Spike: Qwik inside Web Fragments                  | T1         | Done      |
 | T3   | Cloudflare Workers and deploy workflow            | T2         | Done      |
-| T4   | Shell: assets, base styles, boundary helper       | T3         | In review |
-| T5   | Shared UI: Button                                 | T1         | To do     |
+| T4   | Shell: assets, base styles, boundary helper       | T3         | Done      |
+| T5   | Shared UI: Button                                 | T1         | In review |
 | T6   | Explore: pages, header and footer                 | T4, T5     | To do     |
 | T7   | Explore widgets: recommendations and store picker | T6         | To do     |
 | T8   | Checkout: cart state, add to cart, mini cart      | T4, T5     | To do     |
@@ -95,7 +95,10 @@ toggle outlines the spike fragments.
 
 - `packages/ui` with a Qwik `Button` that covers the blueprint's variants: primary, secondary,
   rounded, small, link or button.
-- Ships its own CSS so each fragment can include it inside its shadow root.
+- Based on the blueprint's Checkout button. The Explore copy differs only in a red primary
+  color that the blueprint never shows, since Explore only uses secondary buttons.
+- Registers its CSS with Qwik's `useStyles$`, so the styles render inside each fragment's shadow
+  root.
 
 **Done when** the Button builds and is used by at least one app.
 

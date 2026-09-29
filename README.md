@@ -67,6 +67,7 @@ apps/
   checkout/    Team Checkout, Qwik City app
 packages/
   events/      Typed BroadcastChannel event contract
+  ui/          Shared Qwik Button
   tsconfig/    Shared TypeScript config
 ```
 

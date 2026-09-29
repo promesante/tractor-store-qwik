@@ -1,0 +1,4 @@
+{
+  "extends": "@tractor/tsconfig/qwik.json",
+  "include": ["src"]
+}

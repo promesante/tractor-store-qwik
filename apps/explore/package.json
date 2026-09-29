@@ -22,6 +22,7 @@
     "@cloudflare/workers-types": "^4.20250925.0",
     "@tractor/events": "workspace:*",
     "@tractor/tsconfig": "workspace:*",
+    "@tractor/ui": "workspace:*",
     "@types/node": "^22.0.0",
     "eslint-plugin-qwik": "1.20.1",
     "globals": "^16.4.0",

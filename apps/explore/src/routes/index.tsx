@@ -1,6 +1,7 @@
 import { component$, useSignal, $ } from "@builder.io/qwik";
 import type { DocumentHead } from "@builder.io/qwik-city";
 import { publish } from "@tractor/events";
+import { Button } from "@tractor/ui";
 
 /**
  * Spike page. It checks three things:
@@ -16,7 +17,10 @@ export default component$(() => {
   });
 
   return (
-    <main data-boundary-page="explore">
+    <main
+      data-boundary-page="explore"
+      style={{ maxWidth: "30rem", margin: "0 auto" }}
+    >
       <header data-boundary="explore" class="spike-header">
         <strong>Explore header</strong>
         <web-fragment
@@ -28,15 +32,15 @@ export default component$(() => {
       <h1>Explore home (spike)</h1>
 
       <p>
-        <button id="explore-counter" onClick$={() => clicks.value++}>
-          Explore clicks: <span>{clicks.value}</span>
-        </button>
+        <Button id="explore-counter" onClick$={() => clicks.value++}>
+          Explore clicks: {clicks.value}
+        </Button>
       </p>
 
       <p>
-        <button id="explore-publish" onClick$={sendEvent}>
+        <Button id="explore-publish" variant="primary" onClick$={sendEvent}>
           Publish checkout:cart-updated
-        </button>
+        </Button>
       </p>
 
       <p>
