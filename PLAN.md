@@ -18,8 +18,8 @@ Tasks for building the store described in [spec.md](./spec.md).
 | T3   | Cloudflare Workers and deploy workflow            | T2         | Done      |
 | T4   | Shell: assets, base styles, boundary helper       | T3         | Done      |
 | T5   | Shared UI: Button                                 | T1         | Done      |
-| T6   | Explore: pages, header and footer                 | T4, T5     | In review |
-| T7   | Explore widgets: recommendations and store picker | T6         | To do     |
+| T6   | Explore: pages, header and footer                 | T4, T5     | Done      |
+| T7   | Explore widgets: recommendations and store picker | T6         | In review |
 | T8   | Checkout: cart state, add to cart, mini cart      | T4, T5     | To do     |
 | T9   | Decide: product detail page                       | T7, T8     | To do     |
 | T10  | Checkout: cart, checkout and thank-you pages      | T7, T8     | To do     |
@@ -127,7 +127,9 @@ toggle outlines the spike fragments.
   `explore:store-selected`.
 - Home page shows recommendations.
 
-**Done when** both widgets render standalone and inside the home page.
+- The store picker's buttons use the shared Button from T5.
+
+**Done when** both widgets render standalone, and the home page shows recommendations.
 
 ### T8. Checkout: cart state, add to cart, mini cart
 

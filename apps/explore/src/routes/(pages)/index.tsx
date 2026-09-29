@@ -2,11 +2,19 @@ import { component$ } from "@builder.io/qwik";
 import { routeLoader$ } from "@builder.io/qwik-city";
 import { data } from "~/data";
 import { src, srcset } from "~/lib/format";
+import { recosForSkus } from "~/lib/recommendations";
+import { Recommendations } from "~/components/recommendations";
 
 export const useTeasers = routeLoader$(() => data.teaser);
 
+/** The blueprint's home page recommendations. */
+export const useHomeRecos = routeLoader$(() =>
+  recosForSkus(["CL-01-GY", "AU-07-MT"]),
+);
+
 export default component$(() => {
   const teasers = useTeasers();
+  const recos = useHomeRecos();
   return (
     <main class="e_HomePage">
       {teasers.value.map(({ title, image, url }) => (
@@ -22,6 +30,9 @@ export default component$(() => {
           {title}
         </a>
       ))}
+      <div class="e_HomePage__recommendations">
+        <Recommendations recos={recos.value} />
+      </div>
     </main>
   );
 });
