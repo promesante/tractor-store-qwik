@@ -16,6 +16,7 @@
   },
   "services": [
     { "binding": "EXPLORE", "service": "tractor-explore" },
+    { "binding": "DECIDE", "service": "tractor-decide" },
     { "binding": "CHECKOUT", "service": "tractor-checkout" },
   ],
   "vars": { "MODE": "production" },

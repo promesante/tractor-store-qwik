@@ -1,0 +1,2 @@
+# Build files in dist that must not be served as static assets.
+**/q-manifest.json

@@ -20,8 +20,8 @@ Tasks for building the store described in [spec.md](./spec.md).
 | T5   | Shared UI: Button                                 | T1         | Done      |
 | T6   | Explore: pages, header and footer                 | T4, T5     | Done      |
 | T7   | Explore widgets: recommendations and store picker | T6         | Done      |
-| T8   | Checkout: cart state, add to cart, mini cart      | T4, T5     | In review |
-| T9   | Decide: product detail page                       | T7, T8     | To do     |
+| T8   | Checkout: cart state, add to cart, mini cart      | T4, T5     | Done      |
+| T9   | Decide: product detail page                       | T7, T8     | In review |
 | T10  | Checkout: cart, checkout and thank-you pages      | T7, T8     | To do     |
 | T11  | End-to-end tests in CI                            | T9, T10    | To do     |
 | T12  | Bonus: Inspire team owns recommendations          | T11        | To do     |
@@ -153,6 +153,10 @@ a reload.
 - Product page at `/product/:id` with image, highlights and variant options.
 - Embeds header, footer, add to cart and recommendations widgets.
 - Variant change re-renders the page and remounts the widgets with the new SKU.
+
+- New `apps/decide` Qwik City app and `tractor-decide` Worker, bound in the shell as `DECIDE`.
+- Variant change is a client-side navigation with Qwik City's `Link`.
+- The header and add to cart widgets have their space reserved, so the page does not jump.
 
 **Done when** the product page matches the blueprint and variant change updates the price,
 stock and recommendations.

@@ -16,7 +16,9 @@ export const TEAM_ROUTES: Record<Team, string[]> = {
     "/stores",
     "/_fragment/explore/:_*",
   ],
-  decide: ["/product/:id", "/_fragment/decide/:_*"],
+  // "/product/:_*" also covers Qwik City's data requests for client-side
+  // navigation, such as /product/CL-01/q-data.json.
+  decide: ["/product/:_*", "/_fragment/decide/:_*"],
   checkout: ["/checkout/:_*", "/_fragment/checkout/:_*"],
 };
 
