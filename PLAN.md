@@ -19,8 +19,8 @@ Tasks for building the store described in [spec.md](./spec.md).
 | T4   | Shell: assets, base styles, boundary helper       | T3         | Done      |
 | T5   | Shared UI: Button                                 | T1         | Done      |
 | T6   | Explore: pages, header and footer                 | T4, T5     | Done      |
-| T7   | Explore widgets: recommendations and store picker | T6         | In review |
-| T8   | Checkout: cart state, add to cart, mini cart      | T4, T5     | To do     |
+| T7   | Explore widgets: recommendations and store picker | T6         | Done      |
+| T8   | Checkout: cart state, add to cart, mini cart      | T4, T5     | In review |
 | T9   | Decide: product detail page                       | T7, T8     | To do     |
 | T10  | Checkout: cart, checkout and thank-you pages      | T7, T8     | To do     |
 | T11  | End-to-end tests in CI                            | T9, T10    | To do     |
@@ -139,6 +139,10 @@ toggle outlines the spike fragments.
   confirmation. Sends `checkout:cart-updated`.
 - Mini cart widget at `/_fragment/checkout/mini-cart`. Refetches and highlights on
   `checkout:cart-updated`.
+
+- Adding goes through a Qwik server function. A form action would re-run the widget's loader
+  without its `?sku=` parameter.
+- No space reservation is needed for the mini cart: the header's minimum height already holds it.
 
 **Done when** adding to cart updates the mini cart without a page reload, and the count survives
 a reload.

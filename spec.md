@@ -217,9 +217,10 @@ widget input re-creates the element, for example by keying it on the input.
 ### 6.5 State and data
 
 - Each team keeps its own copy of the blueprint's `database.json` and reads it directly.
-- The cart lives in Checkout's `c_cart` cookie, in the blueprint format `SKU_QTY|SKU_QTY`.
-  Checkout owns every read and write. Add, remove and place order are Qwik City actions or
-  endpoints under `/checkout/*`.
+- The cart lives in Checkout's `c_cart` cookie, in the blueprint format `SKU_QTY|SKU_QTY`. The
+  cookie is HTTP-only, with path `/`. Checkout owns every read and write.
+- The add to cart widget adds through a Qwik server function, then publishes
+  `checkout:cart-updated`. The mini cart reads the new quantity through another server function.
 - No other team reads the cart cookie.
 
 ### 6.6 Styling and assets

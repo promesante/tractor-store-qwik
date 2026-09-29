@@ -1,0 +1,19 @@
+/*
+ * Team Checkout's styles. Copied from the blueprint, one file per component.
+ *
+ * The fragment lives in a shadow root, so the blueprint's html and body rules
+ * don't apply here. The shell sets the font and --outer-space, which inherit.
+ * Rules that match elements have to be repeated inside the fragment.
+ */
+@import "./MiniCart.css";
+@import "./AddToCart.css";
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+p {
+  line-height: 1.5;
+}
