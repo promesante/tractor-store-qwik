@@ -224,7 +224,8 @@ widget input re-creates the element, for example by keying it on the input.
 
 - Each team copies its blueprint CSS with the existing `e_`, `d_` and `c_` prefixes.
 - Shadow DOM isolates fragment styles, so each fragment ships its own CSS, including the shared
-  Button styles from `packages/ui`.
+  Button styles from `packages/ui`. The Button registers them with Qwik's `useStyles$`, which
+  renders them inside the fragment that uses it.
 - The shell declares `@font-face` for Raleway and the global base styles. Inherited properties
   such as `font-family` and custom properties such as `--outer-space` flow into fragments. Font
   faces must be declared at document level, which is why this lives in the shell.
@@ -247,7 +248,7 @@ tractor-store-qwik/
 │   ├── checkout/     Qwik City app
 │   └── inspire/      Qwik City app (bonus)
 ├── packages/
-│   ├── ui/           Shared Qwik components (Button)
+│   ├── ui/           Shared Qwik components (Button), consumed as TypeScript source
 │   ├── events/       Typed BroadcastChannel event contract
 │   └── tsconfig/     Shared TypeScript config
 ├── .github/workflows/

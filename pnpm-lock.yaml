@@ -44,6 +44,9 @@ importers:
       '@tractor/tsconfig':
         specifier: workspace:*
         version: link:../../packages/tsconfig
+      '@tractor/ui':
+        specifier: workspace:*
+        version: link:../../packages/ui
       '@types/node':
         specifier: ^22.0.0
         version: 22.20.4
@@ -77,6 +80,9 @@ importers:
       '@tractor/tsconfig':
         specifier: workspace:*
         version: link:../../packages/tsconfig
+      '@tractor/ui':
+        specifier: workspace:*
+        version: link:../../packages/ui
       '@types/node':
         specifier: ^22.0.0
         version: 22.20.4
@@ -119,6 +125,27 @@ importers:
         version: link:../tsconfig
 
   packages/tsconfig: {}
+
+  packages/ui:
+    devDependencies:
+      '@builder.io/qwik':
+        specifier: 1.20.1
+        version: 1.20.1(vite@7.3.1(@types/node@22.20.4))
+      '@tractor/tsconfig':
+        specifier: workspace:*
+        version: link:../tsconfig
+      '@types/node':
+        specifier: ^22.0.0
+        version: 22.20.4
+      eslint-plugin-qwik:
+        specifier: 1.20.1
+        version: 1.20.1(eslint@10.11.0)(typescript@5.9.3)
+      globals:
+        specifier: ^16.4.0
+        version: 16.5.0
+      vite:
+        specifier: 7.3.1
+        version: 7.3.1(@types/node@22.20.4)
 
 packages:
 
