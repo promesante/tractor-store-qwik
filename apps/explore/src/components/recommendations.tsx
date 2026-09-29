@@ -1,0 +1,40 @@
+import { component$ } from "@builder.io/qwik";
+import type { RecoItem } from "~/data";
+import { src, srcset } from "~/lib/format";
+
+const Recommendation = component$<{ item: RecoItem }>(({ item }) => {
+  const { image, url, name } = item;
+  return (
+    <li class="e_Recommendation">
+      <a class="e_Recommendation_link" href={url}>
+        <img
+          class="e_Recommendation_image"
+          src={src(image, 200)}
+          srcset={srcset(image, [200, 400])}
+          alt=""
+          sizes="200px"
+          width={200}
+          height={200}
+        />
+        <span class="e_Recommendation_name">{name}</span>
+      </a>
+    </li>
+  );
+});
+
+/** Renders nothing when there are no recommendations, like the blueprint. */
+export const Recommendations = component$<{ recos: RecoItem[] }>(
+  ({ recos }) => {
+    if (recos.length === 0) return null;
+    return (
+      <div class="e_Recommendations" data-boundary="explore">
+        <h2>Recommendations</h2>
+        <ul class="e_Recommendations_list">
+          {recos.map((item) => (
+            <Recommendation key={item.sku} item={item} />
+          ))}
+        </ul>
+      </div>
+    );
+  },
+);
