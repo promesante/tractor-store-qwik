@@ -63,6 +63,36 @@ importers:
         specifier: ^4.141.0
         version: 4.141.0(@cloudflare/workers-types@4.20260702.1)(@types/node@22.20.4)
 
+  apps/decide:
+    devDependencies:
+      '@builder.io/qwik':
+        specifier: 1.20.1
+        version: 1.20.1(vite@7.3.1(@types/node@22.20.4))
+      '@builder.io/qwik-city':
+        specifier: 1.20.1
+        version: 1.20.1(@types/node@22.20.4)(rollup@4.63.5)(typescript@5.9.3)
+      '@cloudflare/workers-types':
+        specifier: ^4.20250925.0
+        version: 4.20260702.1
+      '@tractor/tsconfig':
+        specifier: workspace:*
+        version: link:../../packages/tsconfig
+      '@types/node':
+        specifier: ^22.0.0
+        version: 22.20.4
+      eslint-plugin-qwik:
+        specifier: 1.20.1
+        version: 1.20.1(eslint@10.11.0)(typescript@5.9.3)
+      globals:
+        specifier: ^16.4.0
+        version: 16.5.0
+      vite:
+        specifier: 7.3.1
+        version: 7.3.1(@types/node@22.20.4)
+      wrangler:
+        specifier: ^4.141.0
+        version: 4.141.0(@cloudflare/workers-types@4.20260702.1)(@types/node@22.20.4)
+
   apps/explore:
     devDependencies:
       '@builder.io/qwik':

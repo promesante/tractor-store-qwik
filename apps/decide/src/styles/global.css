@@ -1,0 +1,43 @@
+/*
+ * Team Decide's styles. Copied from the blueprint, one file per component.
+ *
+ * The fragment lives in a shadow root, so the blueprint's html and body rules
+ * don't apply here. The shell sets the font and --outer-space, which inherit.
+ * Rules that match elements have to be repeated inside the fragment.
+ */
+@import "./ProductPage.css";
+@import "./VariantOption.css";
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+p {
+  line-height: 1.5;
+}
+
+/*
+ * Space reserved for widgets from other teams, which load in the browser
+ * after the page. It keeps the page from jumping when they arrive. The sizes
+ * were measured in the browser. flow-root keeps each widget's own margins
+ * inside its box, so the reserved height is the whole height.
+ */
+.d_Widget {
+  display: flow-root;
+}
+
+.d_Widget--header {
+  min-height: 181px;
+}
+
+@media (min-width: 500px) and (max-width: 999px) {
+  .d_Widget--header {
+    min-height: 203px;
+  }
+}
+
+.d_Widget--addToCart {
+  min-height: 226px;
+}

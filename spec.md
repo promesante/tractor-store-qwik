@@ -166,7 +166,7 @@ Each team registers its route patterns in the gateway.
 | Team     | Page routes                                        | Widget and asset routes |
 | -------- | -------------------------------------------------- | ----------------------- |
 | Explore  | `/`, `/products`, `/products/:category`, `/stores` | `/_fragment/explore/*`  |
-| Decide   | `/product/:id`                                     | `/_fragment/decide/*`   |
+| Decide   | `/product/:id`, and anything under `/product/`     | `/_fragment/decide/*`   |
 | Checkout | `/checkout/*`                                      | `/_fragment/checkout/*` |
 | Inspire  | none                                               | `/_fragment/inspire/*`  |
 
@@ -192,9 +192,23 @@ These rules come from the [spike](./docs/spike.md) and apply to every Qwik team 
 - The server build defines `import.meta.env.BASE_URL` as `/_fragment/<team>/`, so Qwik's
   preloader fetches its bundle graph from the team's path.
 - Qwik City trailing slashes are turned off.
+- A team's route patterns must also cover Qwik City's data requests for client-side navigation,
+  such as `/product/CL-01/q-data.json`. Decide's pattern is therefore `/product/:_*`.
 - Each app deploys as a Cloudflare Worker with static assets. Its entry is our own
   `src/entry.worker.ts`, which calls Qwik City's request handler. Qwik's Cloudflare Pages
   adapter is not used, since Cloudflare directs new projects to Workers.
+
+### 6.3.2 Embedding a widget
+
+- Each widget element gets a `fragment-id` that is unique on the page. When a widget depends on
+  page state, such as the selected SKU, the SKU is part of its `fragment-id` and Qwik `key`, so
+  the element is re-created when the SKU changes.
+- Widgets load in the browser after the page. The embedding page reserves their height with
+  `min-height`, measured in the browser, and `display: flow-root`, so the page does not jump when
+  they arrive.
+- The shell registers the Web Fragments elements through a small subclass. It sets
+  `web-fragment-host` to `display: block` inside every `<web-fragment>`. The library leaves it
+  inline there, which adds an empty line below each nested widget.
 
 ### 6.4 Communication
 

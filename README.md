@@ -64,14 +64,13 @@ Planned values. They are confirmed as the store is completed.
 apps/
   shell/       Cloudflare Worker: Web Fragments gateway, shell page, static assets
   explore/     Team Explore, Qwik City app
+  decide/      Team Decide, Qwik City app
   checkout/    Team Checkout, Qwik City app
 packages/
   events/      Typed BroadcastChannel event contract
   ui/          Shared Qwik Button
   tsconfig/    Shared TypeScript config
 ```
-
-Team Decide's app is added in a later task.
 
 ## How To Run Locally
 
@@ -115,6 +114,7 @@ Open http://localhost:3000 in your browser.
 | -------- | ---- | ----------------------------------------- |
 | shell    | 3000 | The store. Open this one in your browser. |
 | explore  | 3001 | Reached through the shell                 |
+| decide   | 3002 | Reached through the shell                 |
 | checkout | 3003 | Reached through the shell                 |
 
 Code changes need a restart of `pnpm start`, because it serves production builds.
@@ -126,6 +126,7 @@ on every change:
 
 ```bash
 pnpm --filter @tractor/explore dev    # http://localhost:3001
+pnpm --filter @tractor/decide dev     # http://localhost:3002
 pnpm --filter @tractor/checkout dev   # http://localhost:3003
 ```
 
