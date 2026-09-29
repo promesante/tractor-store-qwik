@@ -26,7 +26,9 @@ function createMiddleware(env: Env) {
   for (const [team, binding] of Object.entries(bindings)) {
     if (binding) {
       gateway.registerFragment(
-        fragmentConfig(team as Team, viaBinding(binding)),
+        fragmentConfig(team as Team, viaBinding(binding), () =>
+          env.ASSETS.fetch(new URL("/404", "https://assets.local")),
+        ),
       );
     }
   }

@@ -3,6 +3,9 @@
 Task T2 in [PLAN.md](../PLAN.md). Verified locally on 2026-09-25 with Qwik 1.20.1,
 Qwik City 1.20.1, web-fragments 0.8.2, wrangler 4.141 and headless Chromium.
 
+> The spike's Explore page was replaced by the real home page in T6. The Checkout spike widget
+> and page stay until T8 and T10 replace them.
+
 ## Result
 
 Both risks from [spec.md, section 11](../spec.md#11-risks) are resolved. Qwik resumes inside

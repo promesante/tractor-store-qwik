@@ -1,0 +1,25 @@
+/*
+ * Team Explore's styles. Copied from the blueprint, one file per component.
+ *
+ * The fragment lives in a shadow root, so rules on html and body from the
+ * blueprint don't apply here. The shell sets the font and --outer-space, which
+ * inherit. Rules that match elements have to be repeated inside the fragment.
+ */
+@import "./Header.css";
+@import "./Navigation.css";
+@import "./Footer.css";
+@import "./Product.css";
+@import "./Filter.css";
+@import "./HomePage.css";
+@import "./CategoryPage.css";
+@import "./StoresPage.css";
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+p {
+  line-height: 1.5;
+}

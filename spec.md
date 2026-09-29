@@ -176,6 +176,8 @@ Each team registers its route patterns in the gateway.
 - Each Qwik app builds its client assets under its own `/_fragment/<team>/` base path, so asset
   requests route back to the owning team.
 - Anything unmatched falls through to the shell's static assets, for example `/cdn/img/...`.
+- Unknown paths get the shell's 404 page. So does a page a team answers with 404, such as an
+  unknown category: the gateway replaces the whole response with the shell's 404 page.
 - The gateway has one fragment config per team, because it matches by path first. A widget
   element's `fragment-id` only has to be unique on the page, for example `checkout-mini-cart`.
 
