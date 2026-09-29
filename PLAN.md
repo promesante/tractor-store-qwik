@@ -15,8 +15,8 @@ Tasks for building the store described in [spec.md](./spec.md).
 | T0   | Spec and plan                                     | none       | Done      |
 | T1   | Monorepo scaffold and CI                          | T0         | Done      |
 | T2   | Spike: Qwik inside Web Fragments                  | T1         | Done      |
-| T3   | Cloudflare Workers and deploy workflow            | T2         | In review |
-| T4   | Shell: assets, base styles, boundary helper       | T3         | To do     |
+| T3   | Cloudflare Workers and deploy workflow            | T2         | Done      |
+| T4   | Shell: assets, base styles, boundary helper       | T3         | In review |
 | T5   | Shared UI: Button                                 | T1         | To do     |
 | T6   | Explore: pages, header and footer                 | T4, T5     | To do     |
 | T7   | Explore widgets: recommendations and store picker | T6         | To do     |
@@ -71,6 +71,7 @@ piercing, Qwik click handlers work in both fragments, and the event reaches the 
 - `.github/workflows/deploy.yml` deploys the apps affected by each push to `main`, team Workers
   first, shell last. It can also be run by hand to deploy everything.
 - Repo owner adds `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` secrets. Done.
+- Live at https://tractor-shell.promesante.workers.dev since 2026-09-29.
 
 **Done when** a merge to `main` deploys the spike and it works on the public `workers.dev` URL.
 
@@ -81,7 +82,11 @@ piercing, Qwik click handlers work in both fragments, and the event reaches the 
   blueprint data, CSS and assets reused here.
 - Shell HTML with meta tags, favicon links, Raleway `@font-face` and global base styles.
 - Load `helper.js` so the team boundary toggle works.
-- Gateway error fallbacks and piercing styles that reserve space for widgets.
+- Copy the helper's styles into nested shadow roots, which the helper cannot reach.
+- A 404 page for unknown paths. Gateway error fallbacks were added in T2.
+- A first `README.md`, based on the blueprint's, with instructions to run the store locally.
+- Space reservation for widgets moves to the tasks that build each widget, because the widget
+  sizes are not known yet.
 
 **Done when** `/cdn/img/...` and `/cdn/js/helper.js` are served by the shell and the boundary
 toggle outlines the spike fragments.
@@ -164,7 +169,7 @@ stock and recommendations.
 
 Prepares the submission described in [spec.md, section 12](./spec.md#12-publishing-to-the-tractor-store-site).
 
-- README in the same format as the other implementations: title, live demo link, "About This
+- Complete the README started in T4, in the same format as the other implementations: title, live demo link, "About This
   Implementation" with the specs table, what is special about this take, limitations, how to
   run locally, and about the author.
 - State that the project is based on the blueprint.
