@@ -21,8 +21,8 @@ Tasks for building the store described in [spec.md](./spec.md).
 | T6   | Explore: pages, header and footer                 | T4, T5     | Done      |
 | T7   | Explore widgets: recommendations and store picker | T6         | Done      |
 | T8   | Checkout: cart state, add to cart, mini cart      | T4, T5     | Done      |
-| T9   | Decide: product detail page                       | T7, T8     | In review |
-| T10  | Checkout: cart, checkout and thank-you pages      | T7, T8     | To do     |
+| T9   | Decide: product detail page                       | T7, T8     | Done      |
+| T10  | Checkout: cart, checkout and thank-you pages      | T7, T8     | In review |
 | T11  | End-to-end tests in CI                            | T9, T10    | To do     |
 | T12  | Bonus: Inspire team owns recommendations          | T11        | To do     |
 | T13  | Docs: README, specs table, footer credits         | T11        | To do     |
@@ -167,6 +167,12 @@ stock and recommendations.
 - Checkout page with compact header, form validation and the store picker widget. The store id
   is filled from `explore:store-selected`.
 - Place order clears the cart and redirects to the thank-you page with confetti.
+
+- Remove and place order use Qwik server functions, not form actions. Inside a Web Fragment, the
+  fragment realm's `FormData` rejects the main page's form element, which Qwik City's `Form`
+  needs.
+- The confetti comes from the `canvas-confetti` package and draws on a canvas the page owns.
+- With an empty cart, the recommendations show the first four items, like the blueprint.
 
 **Done when** the full journey from home to thank-you works as in the blueprint.
 

@@ -22,7 +22,7 @@ const Recommendation = component$<{ item: RecoItem }>(({ item }) => {
   );
 });
 
-/** Renders nothing when there are no recommendations, like the blueprint. */
+/** Renders nothing when there are no recommendations. */
 export const Recommendations = component$<{ recos: RecoItem[] }>(
   ({ recos }) => {
     if (recos.length === 0) return null;

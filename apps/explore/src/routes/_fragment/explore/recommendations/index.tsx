@@ -6,6 +6,7 @@ import { recosForSkus } from "~/lib/recommendations";
 /**
  * Recommendations widget. Input: ?skus=SKU1,SKU2 from the embedding page,
  * for example the selected variant on the product page or the cart contents.
+ * With no known SKUs, it shows the first recommendations, like the blueprint.
  */
 export const useRecos = routeLoader$(({ url }) => {
   const skus = (url.searchParams.get("skus") ?? "")
