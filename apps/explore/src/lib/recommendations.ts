@@ -23,7 +23,16 @@ function colorDistance([r1, g1, b1]: Rgb, [r2, g2, b2]: Rgb): number {
 /** Up to `length` recommendations for the SKUs, excluding the SKUs themselves. */
 export function recosForSkus(skus: string[], length = 4): RecoItem[] {
   const colors = skus.filter((sku) => items[sku]).map((sku) => items[sku].rgb);
-  if (colors.length === 0) return [];
+
+  // With no known SKUs, for example an empty cart, the blueprint averages zero
+  // colors into NaN, every distance becomes NaN, and the sort keeps the data's
+  // order. So it shows the first items. This does the same, explicitly.
+  if (colors.length === 0) {
+    return Object.values(items)
+      .filter((item) => !skus.includes(item.sku))
+      .slice(0, length);
+  }
+
   const target = averageColor(colors);
 
   return Object.keys(items)

@@ -3,6 +3,7 @@
  * "SKU_QTY|SKU_QTY". Only Team Checkout reads or writes it.
  */
 import type { Cookie } from "@builder.io/qwik-city";
+import { findVariant, type Variant } from "~/data";
 
 export interface CartItem {
   sku: string;
@@ -43,4 +44,29 @@ export function addToCart(cookie: Cookie, sku: string): CartItem[] {
 
 export function cartQuantity(items: CartItem[]): number {
   return items.reduce((total, { quantity }) => total + quantity, 0);
+}
+
+export function removeFromCart(cookie: Cookie, sku: string): CartItem[] {
+  const items = readCart(cookie).filter((i) => i.sku !== sku);
+  writeCart(cookie, items);
+  return items;
+}
+
+export function clearCart(cookie: Cookie): void {
+  writeCart(cookie, []);
+}
+
+export interface LineItem extends Variant {
+  quantity: number;
+  total: number;
+}
+
+/** The blueprint's line items: cookie items joined with Checkout's variants. */
+export function toLineItems(items: CartItem[]): LineItem[] {
+  return items.flatMap(({ sku, quantity }) => {
+    const variant = findVariant(sku);
+    return variant
+      ? [{ ...variant, quantity, total: variant.price * quantity }]
+      : [];
+  });
 }

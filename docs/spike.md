@@ -3,8 +3,8 @@
 Task T2 in [PLAN.md](../PLAN.md). Verified locally on 2026-09-25 with Qwik 1.20.1,
 Qwik City 1.20.1, web-fragments 0.8.2, wrangler 4.141 and headless Chromium.
 
-> The spike's Explore page was replaced by the real home page in T6. The Checkout spike widget
-> and page stay until T8 and T10 replace them.
+> The spike's pages and widgets were all replaced by the real store: Explore's page in T6, the
+> Checkout mini cart in T8 and the cart page in T10.
 
 ## Result
 

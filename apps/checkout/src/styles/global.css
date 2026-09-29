@@ -7,6 +7,11 @@
  */
 @import "./MiniCart.css";
 @import "./AddToCart.css";
+@import "./LineItem.css";
+@import "./CompactHeader.css";
+@import "./CartPage.css";
+@import "./Checkout.css";
+@import "./Thanks.css";
 
 *,
 *::before,
@@ -16,4 +21,37 @@
 
 p {
   line-height: 1.5;
+}
+
+/*
+ * Space reserved for widgets from other teams, which load in the browser
+ * after the page. It keeps the page from jumping when they arrive. The sizes
+ * were measured in the browser. flow-root keeps each widget's own margins
+ * inside its box, so the reserved height is the whole height.
+ */
+.c_Widget {
+  display: flow-root;
+}
+
+.c_Widget--header {
+  min-height: 181px;
+}
+
+@media (min-width: 500px) and (max-width: 999px) {
+  .c_Widget--header {
+    min-height: 203px;
+  }
+}
+
+.c_Widget--storePicker {
+  min-height: 114px;
+}
+
+.c_Thanks__confetti {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 100;
 }

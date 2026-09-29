@@ -233,8 +233,13 @@ widget input re-creates the element, for example by keying it on the input.
 - Each team keeps its own copy of the blueprint's `database.json` and reads it directly.
 - The cart lives in Checkout's `c_cart` cookie, in the blueprint format `SKU_QTY|SKU_QTY`. The
   cookie is HTTP-only, with path `/`. Checkout owns every read and write.
-- The add to cart widget adds through a Qwik server function, then publishes
-  `checkout:cart-updated`. The mini cart reads the new quantity through another server function.
+- Every cart change goes through a Qwik server function: add on the add to cart widget, remove
+  on the cart page, and place order on the checkout page. Each one publishes
+  `checkout:cart-updated` or navigates on. The mini cart reads the new quantity through another
+  server function.
+- Qwik City form actions are not used. Their `Form` builds a `FormData` from the form element,
+  and inside a Web Fragment the element belongs to the main page's realm, which the fragment
+  realm's `FormData` rejects. Forms therefore need JavaScript, as the fragments themselves do.
 - No other team reads the cart cookie.
 
 ### 6.6 Styling and assets
@@ -317,12 +322,13 @@ tractor-store-qwik/
 
 ## 11. Risks
 
-| Risk                                         | Why it matters                                                                                          | Mitigation                                                         |
-| -------------------------------------------- | ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------ |
-| Qwik resumability inside a fragment realm    | Qwik's loader listens on `document`, which Web Fragments patches to point at the fragment's shadow root | Resolved in the [spike](./docs/spike.md), with a `<div>` container |
-| Nested fragments                             | The header embeds the mini cart, and product detail embeds two other teams' widgets                     | Resolved in the [spike](./docs/spike.md)                           |
-| Only the URL-matched page is server-rendered | Widgets render on the client, so they appear after the page                                             | Reserve widget space with piercing styles to avoid layout shift    |
-| Web Fragments is in beta                     | API changes between minor versions                                                                      | Pin the exact version                                              |
+| Risk                                                | Why it matters                                                                                          | Mitigation                                                                           |
+| --------------------------------------------------- | ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| Qwik resumability inside a fragment realm           | Qwik's loader listens on `document`, which Web Fragments patches to point at the fragment's shadow root | Resolved in the [spike](./docs/spike.md), with a `<div>` container                   |
+| Nested fragments                                    | The header embeds the mini cart, and product detail embeds two other teams' widgets                     | Resolved in the [spike](./docs/spike.md)                                             |
+| Only the URL-matched page is server-rendered        | Widgets render on the client, so they appear after the page                                             | Reserve widget space with piercing styles to avoid layout shift                      |
+| Web Fragments is in beta                            | API changes between minor versions                                                                      | Pin the exact version                                                                |
+| Fragment code runs in a separate realm from the DOM | Browser APIs that check an element's type, like `FormData`, can reject elements from the main page      | Use server functions instead of form actions. Test every interaction in the browser. |
 
 ## 12. Publishing to the Tractor Store site
 
