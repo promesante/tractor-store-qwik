@@ -1,15 +1,11 @@
 # The Tractor Store - Qwik & Web Fragments
 
 A micro frontends implementation of [The Tractor Store](https://micro-frontends.org/tractor-store/),
-built with [Qwik](https://qwik.dev/), [Web Fragments](https://web-fragments.dev/) and a
+built with [Qwik](https://qwik.dev/) and [Web Fragments](https://web-fragments.dev/) in a
 [Turborepo](https://turbo.build/) monorepo, and deployed to Cloudflare Workers. It is based on the
 [Tractor Store Blueprint](https://github.com/neuland/tractor-store-blueprint).
 
 **Live Demo:** [tractor-shell.promesante.workers.dev](https://tractor-shell.promesante.workers.dev)
-
-> [!NOTE]
-> This is a work in progress. The architecture is in place and deployed, and the store's pages
-> are being built team by team. See [PLAN.md](./PLAN.md) for the status of each task.
 
 ## What is The Tractor Store?
 
@@ -20,44 +16,117 @@ to what [TodoMVC](http://todomvc.com/) did for JavaScript frameworks. Visit
 
 ## About This Implementation
 
-- **Four teams, four systems.** Explore, Decide and Checkout each own a Qwik City app, deployed
-  as its own Cloudflare Worker. A fourth team, Inspire, took over recommendations from Explore,
-  the Tractor Store's second bonus objective.
-- **Web Fragments integration.** A thin shell Worker runs the Web Fragments gateway. For each
-  page, it renders the owning team's fragment on the server and embeds it in the shell. In the
-  browser, each fragment's JavaScript runs in its own isolated realm, and its DOM lives in a
-  shadow root.
-- **Nested fragments.** A page embeds other teams' widgets, such as the mini cart in the header,
-  as nested fragments loaded in the browser.
-- **Communication.** Teams talk through a `BroadcastChannel`, because isolated realms don't
-  share `window` events.
-
-The full architecture is described in [spec.md](./spec.md).
-
 ### Technologies
 
-Planned values. They are confirmed as the store is completed.
-
-| Aspect                     | Solution                                                             |
-| -------------------------- | -------------------------------------------------------------------- |
-| 🛠️ Frameworks, Libraries   | [Qwik], [Qwik City], [Web Fragments], [Vite], [Turborepo]            |
-| 📝 Rendering               | SSR with resumability                                                |
-| 🐚 Application Shell       | Thin shell Worker running the Web Fragments gateway                  |
-| 🧩 Client-Side Integration | Web Fragments: isolated JavaScript realm and shadow DOM per fragment |
-| 🧩 Server-Side Integration | Web Fragments gateway piercing of the page fragment                  |
-| 📣 Communication           | BroadcastChannel events, URL parameters on widget fragments          |
-| 🗺️ Navigation              | MPA, one page fragment per URL                                       |
-| 🎨 Styling                 | Self-contained CSS per team, isolated by shadow DOM                  |
-| 🍱 Design System           | Shared Qwik Button package                                           |
-| 🔮 Discovery               | Route table in the gateway, Cloudflare service bindings              |
-| 🚚 Deployment              | Serverless (Cloudflare Workers), GitHub Actions                      |
-| 👩‍💻 Local Development       | Turborepo and wrangler dev                                           |
+| Aspect                     | Solution                                                                  |
+| -------------------------- | ------------------------------------------------------------------------- |
+| 🛠️ Frameworks, Libraries   | [Qwik], [Qwik City], [Web Fragments], [Vite], [Turborepo]                 |
+| 📝 Rendering               | SSR with resumability                                                     |
+| 🐚 Application Shell       | Thin shell Worker running the Web Fragments gateway                       |
+| 🧩 Client-Side Integration | Web Fragments: an isolated JavaScript realm and a shadow DOM per fragment |
+| 🧩 Server-Side Integration | Web Fragments gateway "piercing" of the page fragment                     |
+| 📣 Communication           | BroadcastChannel events, URL parameters on widget fragments               |
+| 🗺️ Navigation              | MPA between teams, client-side navigation for variant changes             |
+| 🎨 Styling                 | Self-contained CSS per team, isolated by shadow DOM                       |
+| 🍱 Design System           | Shared Qwik Button package                                                |
+| 🔮 Discovery               | Route table in the gateway, Cloudflare service bindings                   |
+| 🚚 Deployment              | Serverless (Cloudflare Workers), one Worker per team, GitHub Actions      |
+| 👩‍💻 Local Development       | Turborepo and wrangler dev, one local Worker per team                     |
 
 [Qwik]: https://qwik.dev/
 [Qwik City]: https://qwik.dev/docs/qwikcity/
 [Web Fragments]: https://web-fragments.dev/
 [Vite]: https://vite.dev/
 [Turborepo]: https://turbo.build/
+
+### Architecture
+
+```
+Browser
+  │
+  ▼
+shell Worker   Web Fragments gateway, shell page, images and fonts (public)
+  ├── explore Worker    home, category, stores, header, footer, store picker
+  ├── decide Worker     product page
+  ├── checkout Worker   cart, checkout, thank you, mini cart, add to cart
+  └── inspire Worker    recommendations
+```
+
+- **One Qwik City app per team**, each deployed as its own Cloudflare Worker. Only the shell is
+  public. It reaches the team Workers through service bindings.
+- **Pages are pierced on the server.** For each request, the gateway finds the team that owns
+  the URL, fetches its server-rendered page and embeds it in the shell's HTML.
+- **Widgets are nested fragments.** A page embeds other teams' widgets as
+  `<web-fragment src="...">` elements, which load in the browser. Nesting goes three levels
+  deep: Decide's product page contains Explore's header, which contains Checkout's mini cart.
+- **Every fragment is isolated.** Its JavaScript runs in its own iframe realm and its DOM lives
+  in a shadow root. Teams don't share `window`, so they talk through a `BroadcastChannel`:
+  "cart updated" from add to cart to the mini cart, and "store selected" from Explore's store
+  picker to Checkout's form.
+- **Qwik resumes instead of hydrating.** A fragment ships almost no JavaScript until the user
+  interacts with it.
+
+The full design, with every decision and its reasons, is in [spec.md](./spec.md). The build
+history, task by task, is in [PLAN.md](./PLAN.md).
+
+### Both bonus objectives
+
+- **Shared UI components.** The Button lives in `packages/ui` and is used by every team. It
+  registers its CSS with the component, so the styles render inside each fragment's shadow root.
+- **Team Inspire.** A fourth team took over recommendations from Explore: the widget, the
+  algorithm, the styles and the data. Recommendations show Inspire's purple boundary.
+
+### What is special about this take
+
+Web Fragments isolates teams more strongly than most micro frontend techniques: separate
+JavaScript realms, not just separate bundles. Making Qwik work inside that took a handful of
+findings, documented in [docs/spike.md](./docs/spike.md) and [spec.md](./spec.md):
+
+- **Qwik renders into a `<div>` container.** The gateway renames a fragment's `<html>` and
+  `<body>`, and with an `<html>` container Qwik could not find its state.
+- **Each team serves its assets under its own prefix**, `/_fragment/<team>/`, while its routes
+  keep their natural paths. That's how the gateway routes asset requests to the right team.
+- **Qwik City form actions are not used.** Their `Form` builds a `FormData` from the form element,
+  which belongs to the main page's realm, and the fragment realm's `FormData` rejects it. Cart
+  changes use server functions instead.
+- **The shell registers the Web Fragments elements through a small subclass.** The library leaves
+  an internal element inline inside nested fragments, which added an empty line under every
+  widget.
+- **Widgets have reserved space.** They load after the page, so each embedding page reserves their
+  height, measured in the browser, and nothing jumps.
+- **End-to-end tests compare with the blueprint.** 25 Playwright tests check pages, widgets and
+  the whole shopping journey against values taken from the live blueprint. CI runs them on every
+  pull request.
+
+### Limitations
+
+- **Very early clicks can be lost.** The gateway sends the page's HTML first, and each fragment's
+  JavaScript realm starts right after. A click in those first moments does nothing.
+- **Forms need JavaScript**, because cart changes use server functions rather than form posts.
+  The fragments need JavaScript anyway.
+- **Widgets render in the browser.** Only the page fragment is rendered on the server. Widgets
+  such as the header or the recommendations appear once their fragment has loaded.
+- **Mobile performance pays for isolation.** The Web Fragments runtime costs about a second of
+  script time on Lighthouse's throttled phone profile.
+- **Web Fragments is in beta** and uses a deprecated `unload` listener, which costs points in
+  Lighthouse's best practices.
+- **Local development runs production builds** through the shell. For hot reload, run one team's
+  app on its own with the Vite dev server.
+- **Blueprint quirks are kept on purpose.** One product's highlights are missing because of a typo
+  in the blueprint's data, and an empty cart shows the first four recommendations, as in the
+  blueprint.
+
+### Performance
+
+[Lighthouse](https://developer.chrome.com/docs/lighthouse/) 13.5 on the live demo, measured on
+2026-09-29. Scores are performance / accessibility / best practices / SEO.
+
+| Page         | Mobile             | Desktop              |
+| ------------ | ------------------ | -------------------- |
+| Home         | 85 / 93 / 81 / 100 | 100 / 100 / 81 / 100 |
+| Product page | 77 / 94 / 81 / 100 | 100 / 100 / 81 / 100 |
+
+Cumulative layout shift is 0 on mobile, and at most 0.02 on desktop.
 
 ### Repository Layout
 
@@ -66,8 +135,8 @@ apps/
   shell/       Cloudflare Worker: Web Fragments gateway, shell page, static assets
   explore/     Team Explore, Qwik City app
   decide/      Team Decide, Qwik City app
-  inspire/     Team Inspire, Qwik City app with the recommendations
   checkout/    Team Checkout, Qwik City app
+  inspire/     Team Inspire, Qwik City app with the recommendations
 e2e/           Playwright end-to-end tests
 packages/
   events/      Typed BroadcastChannel event contract
@@ -170,6 +239,10 @@ Every push to `main` deploys the apps it changed to Cloudflare Workers, through 
 [Deploy workflow](./.github/workflows/deploy.yml). Team Workers deploy before the shell. Only
 the shell has a public URL. The workflow needs the `CLOUDFLARE_API_TOKEN` and
 `CLOUDFLARE_ACCOUNT_ID` repository secrets. See [spec.md, section 9](./spec.md#9-cicd).
+
+## About the Author
+
+Built by [promesante](https://github.com/promesante).
 
 ## License
 
