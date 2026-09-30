@@ -1,0 +1,16 @@
+{
+  "name": "@tractor/e2e",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "playwright test",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.63.0",
+    "@tractor/tsconfig": "workspace:*",
+    "@types/node": "^22.0.0"
+  }
+}

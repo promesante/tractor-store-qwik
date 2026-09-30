@@ -296,6 +296,10 @@ tractor-store-qwik/
 
 ## 9. CI/CD
 
+- **End-to-end tests** in `e2e/` drive the whole store in Chromium with Playwright: the shell,
+  the pages of all three teams, the widgets, and the shopping journey from product to order
+  confirmation. Expected values come from the live blueprint. CI runs them on every pull request
+  and push to `main`, against a store started locally with `pnpm start`.
 - **Pull requests** run lint, typecheck, build and a wrangler dry-run deploy through Turborepo,
   only for packages affected by the change. The dry run checks each Worker's config and bundle
   without Cloudflare credentials.
@@ -322,13 +326,14 @@ tractor-store-qwik/
 
 ## 11. Risks
 
-| Risk                                                | Why it matters                                                                                          | Mitigation                                                                           |
-| --------------------------------------------------- | ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
-| Qwik resumability inside a fragment realm           | Qwik's loader listens on `document`, which Web Fragments patches to point at the fragment's shadow root | Resolved in the [spike](./docs/spike.md), with a `<div>` container                   |
-| Nested fragments                                    | The header embeds the mini cart, and product detail embeds two other teams' widgets                     | Resolved in the [spike](./docs/spike.md)                                             |
-| Only the URL-matched page is server-rendered        | Widgets render on the client, so they appear after the page                                             | Reserve widget space with piercing styles to avoid layout shift                      |
-| Web Fragments is in beta                            | API changes between minor versions                                                                      | Pin the exact version                                                                |
-| Fragment code runs in a separate realm from the DOM | Browser APIs that check an element's type, like `FormData`, can reject elements from the main page      | Use server functions instead of form actions. Test every interaction in the browser. |
+| Risk                                                | Why it matters                                                                                                                                           | Mitigation                                                                           |
+| --------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| Qwik resumability inside a fragment realm           | Qwik's loader listens on `document`, which Web Fragments patches to point at the fragment's shadow root                                                  | Resolved in the [spike](./docs/spike.md), with a `<div>` container                   |
+| Nested fragments                                    | The header embeds the mini cart, and product detail embeds two other teams' widgets                                                                      | Resolved in the [spike](./docs/spike.md)                                             |
+| Only the URL-matched page is server-rendered        | Widgets render on the client, so they appear after the page                                                                                              | Reserve widget space with piercing styles to avoid layout shift                      |
+| Web Fragments is in beta                            | API changes between minor versions                                                                                                                       | Pin the exact version                                                                |
+| Fragment code runs in a separate realm from the DOM | Browser APIs that check an element's type, like `FormData`, can reject elements from the main page                                                       | Use server functions instead of form actions. Test every interaction in the browser. |
+| Fragment JavaScript starts after the HTML is shown  | A click in the first moments after a page appears can be lost, because Web Fragments starts each fragment's realm after the server-rendered HTML arrives | Accepted for now. Tests wait for each realm's Qwik loader before interacting.        |
 
 ## 12. Publishing to the Tractor Store site
 
