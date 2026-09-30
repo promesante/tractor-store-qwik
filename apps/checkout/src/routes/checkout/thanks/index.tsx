@@ -30,6 +30,8 @@ export default component$(() => {
       if (Date.now() < end) requestAnimationFrame(frame);
     };
     frame();
+    // Marks that the confetti fired. It only lasts a second.
+    canvas.value.dataset.fired = "";
   });
 
   return (

@@ -35,6 +35,7 @@ export default component$(() => {
   const lastname = useSignal("");
   const storeId = useSignal("");
   const valid = useSignal(false);
+  const listening = useSignal(false);
 
   const submit = $(async () => {
     const ok = await placeOrder({
@@ -60,6 +61,9 @@ export default component$(() => {
           validate();
         }),
       );
+      // Marks the form once it hears the store picker. The picker cannot be
+      // asked about a choice made before this moment.
+      listening.value = true;
     },
     { strategy: "document-ready" },
   );
@@ -73,6 +77,7 @@ export default component$(() => {
           ref={form}
           method="post"
           class="c_Checkout__form"
+          data-listening={listening.value ? "" : undefined}
           preventdefault:submit
           onSubmit$={submit}
           onInput$={validate}

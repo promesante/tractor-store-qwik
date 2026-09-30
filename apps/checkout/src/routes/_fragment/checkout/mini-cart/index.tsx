@@ -21,10 +21,11 @@ const fetchQuantity = server$(function () {
 export default component$(() => {
   const quantity = useSignal(useQuantity().value);
   const highlight = useSignal(false);
+  const listening = useSignal(false);
 
   // eslint-disable-next-line qwik/no-use-visible-task
   useVisibleTask$(
-    ({ cleanup }) => {
+    async ({ cleanup }) => {
       cleanup(
         subscribe("checkout:cart-updated", async () => {
           quantity.value = await fetchQuantity();
@@ -32,6 +33,10 @@ export default component$(() => {
           setTimeout(() => (highlight.value = false), 600);
         }),
       );
+      // The cart may have changed after the server rendered this widget and
+      // before it started listening, for example on a slow device. Catch up.
+      quantity.value = await fetchQuantity();
+      listening.value = true;
     },
     { strategy: "document-ready" },
   );
@@ -40,6 +45,7 @@ export default component$(() => {
     <div
       class={["c_MiniCart", highlight.value && "c_MiniCart--highlight"]}
       data-boundary="checkout"
+      data-listening={listening.value ? "" : undefined}
     >
       <Button
         variant="secondary"

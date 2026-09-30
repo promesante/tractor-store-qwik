@@ -45,6 +45,16 @@ export async function waitForFragments(
     .toBe(true);
 }
 
+/**
+ * Waits until the mini cart listens for cart updates. Until then, an update is
+ * not shown as it happens, only once the mini cart has caught up.
+ */
+export async function waitForMiniCart(page: Page): Promise<void> {
+  await expect(page.locator(".c_MiniCart[data-listening]")).toBeAttached({
+    timeout: 30_000,
+  });
+}
+
 /** Opens a page and waits until the named fragments are interactive. */
 export async function openReady(
   page: Page,
