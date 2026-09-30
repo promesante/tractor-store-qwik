@@ -22,8 +22,8 @@ Tasks for building the store described in [spec.md](./spec.md).
 | T7   | Explore widgets: recommendations and store picker | T6         | Done      |
 | T8   | Checkout: cart state, add to cart, mini cart      | T4, T5     | Done      |
 | T9   | Decide: product detail page                       | T7, T8     | Done      |
-| T10  | Checkout: cart, checkout and thank-you pages      | T7, T8     | In review |
-| T11  | End-to-end tests in CI                            | T9, T10    | To do     |
+| T10  | Checkout: cart, checkout and thank-you pages      | T7, T8     | Done      |
+| T11  | End-to-end tests in CI                            | T9, T10    | In review |
 | T12  | Bonus: Inspire team owns recommendations          | T11        | To do     |
 | T13  | Docs: README, specs table, footer credits         | T11        | To do     |
 | T14  | Submit to the Tractor Store site                  | T3, T13    | To do     |
@@ -180,8 +180,13 @@ stock and recommendations.
 
 ### T11. End-to-end tests in CI
 
-- Playwright tests for the customer journey and each communication concept.
-- Run in CI against the locally started store.
+- Playwright tests for the customer journey and each communication concept, in the `e2e`
+  workspace package.
+- Run in CI against the locally started store, in a separate job.
+- Expected values are fixed in the tests, taken from the live blueprint, so the suite does not
+  depend on that site being up.
+
+**Done when** the suite passes in CI and repeatedly from fresh local starts.
 
 ### T12. Bonus: Inspire team owns recommendations
 

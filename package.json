@@ -13,7 +13,8 @@
     "lint:root": "prettier --check .",
     "typecheck": "turbo run typecheck",
     "format": "prettier --write .",
-    "start": "turbo run build && turbo run start"
+    "start": "turbo run build && turbo run start",
+    "test:e2e": "pnpm --filter @tractor/e2e test"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

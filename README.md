@@ -66,6 +66,7 @@ apps/
   explore/     Team Explore, Qwik City app
   decide/      Team Decide, Qwik City app
   checkout/    Team Checkout, Qwik City app
+e2e/           Playwright end-to-end tests
 packages/
   events/      Typed BroadcastChannel event contract
   ui/          Shared Qwik Button
@@ -140,7 +141,11 @@ These are the same checks that CI runs on every pull request:
 pnpm lint        # ESLint for every package, and Prettier for the whole repository
 pnpm typecheck   # TypeScript
 pnpm build       # production builds
+pnpm test:e2e    # end-to-end tests in Chromium, against the whole store
 ```
+
+The end-to-end tests start the store themselves, or reuse one already running on port 3000.
+Install their browser once with `pnpm --filter @tractor/e2e exec playwright install chromium`.
 
 `pnpm format` fixes formatting.
 
