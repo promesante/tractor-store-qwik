@@ -1,6 +1,6 @@
 import { expect, test, type BrowserContext } from "@playwright/test";
 import { RECOS } from "./data";
-import { openReady, waitForFragments } from "./support";
+import { openReady, waitForFragments, waitForMiniCart } from "./support";
 
 const cartCookie = async (context: BrowserContext) =>
   (await context.cookies()).find((c) => c.name === "c_cart")?.value ?? "";
@@ -11,6 +11,7 @@ test.describe("shopping journey", () => {
   }) => {
     const home = await context.newPage();
     await openReady(home, "/", ["checkout-mini-cart"]);
+    await waitForMiniCart(home);
     await expect(home.locator(".c_MiniCart__quantity")).toHaveText("");
 
     const product = await context.newPage();
@@ -44,6 +45,7 @@ test.describe("shopping journey", () => {
       "checkout-mini-cart",
       "checkout-add-to-cart-CL-01-GR",
     ]);
+    await waitForMiniCart(page);
     await addToBasket("1");
     await addToBasket("2");
     await page.getByRole("link", { name: "Stormy Sky", exact: true }).click();
@@ -95,6 +97,10 @@ test.describe("shopping journey", () => {
     await page.getByRole("link", { name: "Checkout", exact: true }).click();
     await expect(page).toHaveURL(/\/checkout\/checkout$/);
     await waitForFragments(page, ["checkout", "explore-store-picker"]);
+    // The checkout form listens for the store picker's event from here on.
+    await expect(
+      page.locator(".c_Checkout__form[data-listening]"),
+    ).toBeAttached();
     await expect(page.locator(".c_CompactHeader")).toBeVisible();
     await expect(page.locator(".e_Header")).toHaveCount(0);
     const placeOrder = page.getByRole("button", { name: "place order" });
@@ -118,26 +124,11 @@ test.describe("shopping journey", () => {
     await expect(
       page.getByRole("heading", { name: "Thanks for your order!" }),
     ).toBeVisible();
-    // The confetti library loads after the page, so wait for pixels.
-    await expect
-      .poll(() =>
-        page
-          .locator("canvas.c_Thanks__confetti")
-          .evaluate((canvas: HTMLCanvasElement) => {
-            if (canvas.width === 0 || canvas.height === 0) return 0;
-            const ctx = canvas.getContext("2d")!;
-            const data = ctx.getImageData(
-              0,
-              0,
-              canvas.width,
-              canvas.height,
-            ).data;
-            let pixels = 0;
-            for (let i = 3; i < data.length; i += 4) if (data[i]) pixels++;
-            return pixels;
-          }),
-      )
-      .toBeGreaterThan(0);
+    // The confetti lasts a second, and the library clears its canvas at the
+    // end, so check that it fired rather than looking for pixels.
+    await expect(
+      page.locator("canvas.c_Thanks__confetti[data-fired]"),
+    ).toBeAttached();
     await expect(page.locator(".c_MiniCart__quantity")).toHaveText("");
     expect(await cartCookie(context)).toBe("");
 

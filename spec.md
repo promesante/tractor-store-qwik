@@ -233,6 +233,10 @@ widget input re-creates the element, for example by keying it on the input.
 - Each team keeps its own copy of the blueprint's `database.json` and reads it directly.
 - The cart lives in Checkout's `c_cart` cookie, in the blueprint format `SKU_QTY|SKU_QTY`. The
   cookie is HTTP-only, with path `/`. Checkout owns every read and write.
+- Listeners subscribe shortly after their fragment starts, so an event can come before they
+  listen. The mini cart therefore reads the current quantity right after subscribing. The
+  checkout form marks itself with `data-listening` once it hears the store picker, and the tests
+  wait for that mark.
 - Every cart change goes through a Qwik server function: add on the add to cart widget, remove
   on the cart page, and place order on the checkout page. Each one publishes
   `checkout:cart-updated` or navigates on. The mini cart reads the new quantity through another
