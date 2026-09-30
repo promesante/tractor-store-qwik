@@ -10,23 +10,23 @@ Tasks for building the store described in [spec.md](./spec.md).
 
 ## Status
 
-| Task | Title                                             | Depends on | Status    |
-| ---- | ------------------------------------------------- | ---------- | --------- |
-| T0   | Spec and plan                                     | none       | Done      |
-| T1   | Monorepo scaffold and CI                          | T0         | Done      |
-| T2   | Spike: Qwik inside Web Fragments                  | T1         | Done      |
-| T3   | Cloudflare Workers and deploy workflow            | T2         | Done      |
-| T4   | Shell: assets, base styles, boundary helper       | T3         | Done      |
-| T5   | Shared UI: Button                                 | T1         | Done      |
-| T6   | Explore: pages, header and footer                 | T4, T5     | Done      |
-| T7   | Explore widgets: recommendations and store picker | T6         | Done      |
-| T8   | Checkout: cart state, add to cart, mini cart      | T4, T5     | Done      |
-| T9   | Decide: product detail page                       | T7, T8     | Done      |
-| T10  | Checkout: cart, checkout and thank-you pages      | T7, T8     | Done      |
-| T11  | End-to-end tests in CI                            | T9, T10    | Done      |
-| T12  | Bonus: Inspire team owns recommendations          | T11        | Done      |
-| T13  | Docs: README, specs table, footer credits         | T11        | In review |
-| T14  | Submit to the Tractor Store site                  | T3, T13    | To do     |
+| Task | Title                                             | Depends on | Status  |
+| ---- | ------------------------------------------------- | ---------- | ------- |
+| T0   | Spec and plan                                     | none       | Done    |
+| T1   | Monorepo scaffold and CI                          | T0         | Done    |
+| T2   | Spike: Qwik inside Web Fragments                  | T1         | Done    |
+| T3   | Cloudflare Workers and deploy workflow            | T2         | Done    |
+| T4   | Shell: assets, base styles, boundary helper       | T3         | Done    |
+| T5   | Shared UI: Button                                 | T1         | Done    |
+| T6   | Explore: pages, header and footer                 | T4, T5     | Done    |
+| T7   | Explore widgets: recommendations and store picker | T6         | Done    |
+| T8   | Checkout: cart state, add to cart, mini cart      | T4, T5     | Done    |
+| T9   | Decide: product detail page                       | T7, T8     | Done    |
+| T10  | Checkout: cart, checkout and thank-you pages      | T7, T8     | Done    |
+| T11  | End-to-end tests in CI                            | T9, T10    | Done    |
+| T12  | Bonus: Inspire team owns recommendations          | T11        | Done    |
+| T13  | Docs: README, specs table, footer credits         | T11        | Done    |
+| T14  | Submit to the Tractor Store site                  | T3, T13    | Drafted |
 
 ## Phase 0: Foundation
 
@@ -223,5 +223,9 @@ Prepares the submission described in [spec.md, section 12](./spec.md#12-publishi
   what is special about this implementation.
 - The repo owner sends it to the Tractor Store maintainers, following
   [the contribution steps](https://micro-frontends.org/tractor-store/#contribute).
+
+- Submissions go to microfrontends@neuland-bfi.de, subject "New Tractor Store Implementation".
+- The site lists each implementation as a card: title, rendering approach, integration
+  techniques, author, GitHub link and live demo link. The email proposes these values.
 
 **Done when** the implementation appears in the site's Implementations list.
