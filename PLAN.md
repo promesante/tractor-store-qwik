@@ -24,8 +24,8 @@ Tasks for building the store described in [spec.md](./spec.md).
 | T9   | Decide: product detail page                       | T7, T8     | Done      |
 | T10  | Checkout: cart, checkout and thank-you pages      | T7, T8     | Done      |
 | T11  | End-to-end tests in CI                            | T9, T10    | Done      |
-| T12  | Bonus: Inspire team owns recommendations          | T11        | In review |
-| T13  | Docs: README, specs table, footer credits         | T11        | To do     |
+| T12  | Bonus: Inspire team owns recommendations          | T11        | Done      |
+| T13  | Docs: README, specs table, footer credits         | T11        | In review |
 | T14  | Submit to the Tractor Store site                  | T3, T13    | To do     |
 
 ## Phase 0: Foundation
@@ -212,7 +212,8 @@ Prepares the submission described in [spec.md, section 12](./spec.md#12-publishi
   against the deployed store.
 - Update the footer credits with this tech stack and repository link. Keep the initiative block
   untouched.
-- Lighthouse score of the deployed store in the README.
+- Lighthouse scores of the deployed store in the README, mobile and desktop, with the reasons
+  for the gaps.
 
 **Done when** the README is complete and every feature works on the live demo.
 
