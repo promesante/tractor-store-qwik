@@ -118,8 +118,8 @@ export default component$(() => {
 
         <web-fragment
           key={`recommendations-${skus}`}
-          fragment-id={`explore-recommendations-${skus || "none"}`}
-          src={`/_fragment/explore/recommendations?skus=${skus}`}
+          fragment-id={`inspire-recommendations-${skus || "none"}`}
+          src={`/_fragment/inspire/recommendations?skus=${skus}`}
         />
       </main>
       <ExploreFooter />

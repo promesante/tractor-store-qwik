@@ -5,10 +5,10 @@ import { src, srcset } from "~/lib/format";
 const Recommendation = component$<{ item: RecoItem }>(({ item }) => {
   const { image, url, name } = item;
   return (
-    <li class="e_Recommendation">
-      <a class="e_Recommendation_link" href={url}>
+    <li class="i_Recommendation">
+      <a class="i_Recommendation_link" href={url}>
         <img
-          class="e_Recommendation_image"
+          class="i_Recommendation_image"
           src={src(image, 200)}
           srcset={srcset(image, [200, 400])}
           alt=""
@@ -16,7 +16,7 @@ const Recommendation = component$<{ item: RecoItem }>(({ item }) => {
           width={200}
           height={200}
         />
-        <span class="e_Recommendation_name">{name}</span>
+        <span class="i_Recommendation_name">{name}</span>
       </a>
     </li>
   );
@@ -27,9 +27,9 @@ export const Recommendations = component$<{ recos: RecoItem[] }>(
   ({ recos }) => {
     if (recos.length === 0) return null;
     return (
-      <div class="e_Recommendations" data-boundary="explore">
+      <div class="i_Recommendations" data-boundary="inspire">
         <h2>Recommendations</h2>
-        <ul class="e_Recommendations_list">
+        <ul class="i_Recommendations_list">
           {recos.map((item) => (
             <Recommendation key={item.sku} item={item} />
           ))}

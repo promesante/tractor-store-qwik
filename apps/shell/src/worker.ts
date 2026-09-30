@@ -7,6 +7,7 @@ interface Env {
   EXPLORE: Fetcher;
   DECIDE?: Fetcher;
   CHECKOUT: Fetcher;
+  INSPIRE?: Fetcher;
   MODE?: "development" | "production";
 }
 
@@ -22,6 +23,7 @@ function createMiddleware(env: Env) {
     explore: env.EXPLORE,
     decide: env.DECIDE,
     checkout: env.CHECKOUT,
+    inspire: env.INSPIRE,
   };
   for (const [team, binding] of Object.entries(bindings)) {
     if (binding) {

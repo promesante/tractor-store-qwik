@@ -1,9 +1,9 @@
-.e_Recommendations {
+.i_Recommendations {
   padding: 1rem;
   margin: 0 -1rem 3rem;
 }
 
-.e_Recommendations_list {
+.i_Recommendations_list {
   @media (max-width: 499px) {
     grid-template-columns: 1fr 1fr;
   }

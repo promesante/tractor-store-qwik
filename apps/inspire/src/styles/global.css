@@ -1,0 +1,15 @@
+/*
+ * Team Inspire's styles, taken over from Team Explore with the class prefix
+ * changed from e_ to i_.
+ *
+ * The fragment lives in a shadow root, so rules that match elements have to
+ * be repeated inside the fragment.
+ */
+@import "./Recommendations.css";
+@import "./Recommendation.css";
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}

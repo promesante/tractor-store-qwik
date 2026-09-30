@@ -106,7 +106,7 @@ Same boundaries as the blueprint. 📄 is a page, 🧩 is a fragment embedded in
   - 📄 Stores `/stores`
   - 🧩 Header, on every page except checkout
   - 🧩 Footer, on every page
-  - 🧩 Recommendations, on home, product detail and cart
+  - 🧩 Recommendations, on home, product detail and cart: moved to Inspire in T12
   - 🧩 Store Picker, on the checkout page
 - 🟢 **Decide**
   - 📄 Product detail `/product/:id?sku=...`
@@ -116,8 +116,8 @@ Same boundaries as the blueprint. 📄 is a page, 🧩 is a fragment embedded in
   - 📄 Thank you `/checkout/thanks`
   - 🧩 Mini Cart, inside the header
   - 🧩 Add To Cart, on product detail
-- 🟣 **Inspire** (bonus, later milestone)
-  - 🧩 Recommendations, moved out of Explore
+- 🟣 **Inspire** (bonus, added in T12)
+  - 🧩 Recommendations, on home, product detail and cart, taken over from Explore
 
 Every fragment root keeps the blueprint's `data-boundary="<team>"` attribute, and every page
 root keeps `data-boundary-page="<team>"`, so the boundary toggle helper keeps working.
@@ -134,7 +134,7 @@ shell Worker  (Web Fragments gateway, shell HTML, /cdn/* static assets)
   ├── service binding EXPLORE  ──▶ explore Worker   (Qwik City)
   ├── service binding DECIDE   ──▶ decide Worker    (Qwik City)
   ├── service binding CHECKOUT ──▶ checkout Worker  (Qwik City)
-  └── service binding INSPIRE  ──▶ inspire Worker   (bonus)
+  └── service binding INSPIRE  ──▶ inspire Worker   (Qwik City)
 ```
 
 - Only the shell Worker has a public route. Team Workers are reached only through service
@@ -268,7 +268,7 @@ tractor-store-qwik/
 │   ├── explore/      Qwik City app
 │   ├── decide/       Qwik City app
 │   ├── checkout/     Qwik City app
-│   └── inspire/      Qwik City app (bonus)
+│   └── inspire/      Qwik City app
 ├── packages/
 │   ├── ui/           Shared Qwik components (Button), consumed as TypeScript source
 │   ├── events/       Typed BroadcastChannel event contract

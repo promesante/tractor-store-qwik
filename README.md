@@ -20,8 +20,9 @@ to what [TodoMVC](http://todomvc.com/) did for JavaScript frameworks. Visit
 
 ## About This Implementation
 
-- **Three teams, three systems.** Explore, Decide and Checkout each own a Qwik City app,
-  deployed as its own Cloudflare Worker.
+- **Four teams, four systems.** Explore, Decide and Checkout each own a Qwik City app, deployed
+  as its own Cloudflare Worker. A fourth team, Inspire, took over recommendations from Explore,
+  the Tractor Store's second bonus objective.
 - **Web Fragments integration.** A thin shell Worker runs the Web Fragments gateway. For each
   page, it renders the owning team's fragment on the server and embeds it in the shell. In the
   browser, each fragment's JavaScript runs in its own isolated realm, and its DOM lives in a
@@ -65,6 +66,7 @@ apps/
   shell/       Cloudflare Worker: Web Fragments gateway, shell page, static assets
   explore/     Team Explore, Qwik City app
   decide/      Team Decide, Qwik City app
+  inspire/     Team Inspire, Qwik City app with the recommendations
   checkout/    Team Checkout, Qwik City app
 e2e/           Playwright end-to-end tests
 packages/
@@ -117,6 +119,7 @@ Open http://localhost:3000 in your browser.
 | explore  | 3001 | Reached through the shell                 |
 | decide   | 3002 | Reached through the shell                 |
 | checkout | 3003 | Reached through the shell                 |
+| inspire  | 3004 | Reached through the shell                 |
 
 Code changes need a restart of `pnpm start`, because it serves production builds.
 
@@ -129,6 +132,7 @@ on every change:
 pnpm --filter @tractor/explore dev    # http://localhost:3001
 pnpm --filter @tractor/decide dev     # http://localhost:3002
 pnpm --filter @tractor/checkout dev   # http://localhost:3003
+pnpm --filter @tractor/inspire dev    # http://localhost:3004
 ```
 
 This mode doesn't go through the shell, so other teams' fragments don't appear.
@@ -158,7 +162,7 @@ Install their browser once with `pnpm --filter @tractor/e2e exec playwright inst
 - **`Cannot find matching keyid`** from Corepack: the Corepack bundled with some Node 22 releases
   has outdated npm signing keys. Install pnpm with npm instead, as shown above.
 - **`Address already in use`**: Workers from a previous run are still running. Stop them, or
-  free ports 3000 to 3003.
+  free ports 3000 to 3004.
 
 ## Deployment
 

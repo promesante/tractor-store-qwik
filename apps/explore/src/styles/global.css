@@ -13,8 +13,6 @@
 @import "./HomePage.css";
 @import "./CategoryPage.css";
 @import "./StoresPage.css";
-@import "./Recommendations.css";
-@import "./Recommendation.css";
 @import "./StorePicker.css";
 
 *,
@@ -25,4 +23,48 @@
 
 p {
   line-height: 1.5;
+}
+
+/*
+ * Space reserved for widgets from other teams, which load in the browser
+ * after the page. The sizes were measured in the browser. flow-root keeps each
+ * widget's own margins inside its box.
+ */
+
+/* Team Checkout's mini cart, in the header. */
+.e_Header__cart web-fragment {
+  display: flow-root;
+  min-height: 90px;
+}
+
+@media (min-width: 500px) {
+  .e_Header__cart web-fragment {
+    min-height: 114px;
+  }
+}
+
+/* Team Inspire's recommendations, on the home page. */
+.e_Widget--recommendations {
+  display: flow-root;
+  min-height: 650px;
+  /*
+   * Below 500px the home page is a plain column. In the blueprint, the
+   * recommendations' 3rem bottom margin merges with the footer's 1rem top
+   * margin there. flow-root keeps them apart, so give the 1rem back.
+   */
+  margin-bottom: -1rem;
+}
+
+@media (min-width: 500px) {
+  .e_Widget--recommendations {
+    min-height: 458px;
+    /* A grid cell already keeps the margins apart, as in the blueprint. */
+    margin-bottom: 0;
+  }
+}
+
+@media (min-width: 1000px) {
+  .e_Widget--recommendations {
+    min-height: 454px;
+  }
 }
