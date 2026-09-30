@@ -48,15 +48,17 @@ requires. The site's text is kept in [new-requirements.md](./new-requirements.md
 
 From the Tractor Store site. An end user must not be able to tell implementations apart.
 
-| Feature                                                                          | Owner             | Task      |
-| -------------------------------------------------------------------------------- | ----------------- | --------- |
-| Boundary toggle, to show which team owns what                                    | Shell             | T4        |
-| Complete shop: home, category, stores, product detail, cart, checkout, thank-you | All teams         | T6 to T10 |
-| Header and footer, the same on every page except checkout                        | Explore           | T6        |
-| Recommendations matched by color, from the selected product and cart contents    | Explore           | T7        |
-| Shopping cart: add and remove tractors, mini cart updates                        | Checkout          | T8, T10   |
-| Checkout form with an embedded store picker owned by Explore                     | Checkout, Explore | T7, T10   |
-| Confirmation confetti, powered by an external dependency                         | Checkout          | T10       |
+| Feature                                                                          | Owner                  | Task      | Checked by e2e test                                    |
+| -------------------------------------------------------------------------------- | ---------------------- | --------- | ------------------------------------------------------ |
+| Boundary toggle, to show which team owns what                                    | Shell                  | T4        | `shell.spec.ts`                                        |
+| Complete shop: home, category, stores, product detail, cart, checkout, thank-you | All teams              | T6 to T10 | all specs                                              |
+| Header and footer, the same on every page except checkout                        | Explore                | T6        | `explore.spec.ts`, `decide.spec.ts`, `journey.spec.ts` |
+| Recommendations matched by color, from the selected product and cart contents    | Inspire, first Explore | T7, T12   | `widgets.spec.ts`, `decide.spec.ts`, `journey.spec.ts` |
+| Shopping cart: add and remove tractors, mini cart updates                        | Checkout               | T8, T10   | `journey.spec.ts`                                      |
+| Checkout form with an embedded store picker owned by Explore                     | Checkout, Explore      | T7, T10   | `widgets.spec.ts`, `journey.spec.ts`                   |
+| Confirmation confetti, powered by an external dependency                         | Checkout               | T10       | `journey.spec.ts`                                      |
+
+All seven are implemented and verified on the live demo.
 
 ### 2.2 Principles every implementation must follow
 
@@ -353,7 +355,8 @@ The site's
 
 ### 12.1 Specs table
 
-The README uses the same table as the other implementations. Planned values:
+The README uses the same table as the other implementations. The final values are in
+[README.md](./README.md#technologies). These were the planned values:
 
 | Aspect                     | Solution                                                             |
 | -------------------------- | -------------------------------------------------------------------- |
