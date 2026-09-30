@@ -28,7 +28,7 @@ test.describe("product page", () => {
     await expect(page.locator(".c_AddToCart__information")).toContainText(
       "5700 Ø",
     );
-    await expect(page.locator(".e_Recommendation_name")).toHaveText(
+    await expect(page.locator(".i_Recommendation_name")).toHaveText(
       RECOS["CL-01-GR"],
     );
     await expect(page.locator(".e_Footer")).toBeVisible();
@@ -46,7 +46,7 @@ test.describe("product page", () => {
 
   test("changes the variant without reloading the page", async ({ page }) => {
     await openReady(page, "/product/CL-01?sku=CL-01-GR", ["decide"]);
-    await expect(page.locator(".e_Recommendation_name")).toHaveText(
+    await expect(page.locator(".i_Recommendation_name")).toHaveText(
       RECOS["CL-01-GR"],
     );
     await page.evaluate(
@@ -62,7 +62,7 @@ test.describe("product page", () => {
       "src",
       "/cdn/img/product/400/CL-01-GY.webp",
     );
-    await expect(page.locator(".e_Recommendation_name")).toHaveText(
+    await expect(page.locator(".i_Recommendation_name")).toHaveText(
       RECOS["CL-01-GY"],
     );
     await expect(page.locator(".c_AddToCart")).toHaveCount(1);
@@ -81,7 +81,7 @@ test.describe("product page", () => {
 
   test("recommendation links open other products", async ({ page }) => {
     await openReady(page, "/product/CL-01?sku=CL-01-GR", [
-      "explore-recommendations-CL-01-GR",
+      "inspire-recommendations-CL-01-GR",
     ]);
     await page.getByText(RECOS["CL-01-GR"][0], { exact: true }).click();
     await expect(page).toHaveURL(/\/product\/CL-09\?sku=CL-09-GR$/);

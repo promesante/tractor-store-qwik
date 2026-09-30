@@ -32,19 +32,10 @@ export interface Store {
   image: string;
 }
 
-export interface RecoItem {
-  name: string;
-  sku: string;
-  image: string;
-  url: string;
-  rgb: number[];
-}
-
 interface Database {
   teaser: Teaser[];
   categories: Category[];
   stores: Store[];
-  recommendations: Record<string, RecoItem>;
 }
 
 export const data = database as Database;

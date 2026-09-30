@@ -73,7 +73,7 @@ test.describe("shopping journey", () => {
     await expect(page.locator(".c_CartPage__total")).toHaveText(
       "Total: 17600 Ø",
     );
-    await expect(page.locator(".e_Recommendation_name")).toHaveText(
+    await expect(page.locator(".i_Recommendation_name")).toHaveText(
       RECOS["CL-01-GR,CL-01-GY"],
     );
 
@@ -86,7 +86,7 @@ test.describe("shopping journey", () => {
       "Total: 11400 Ø",
     );
     await expect(page.locator(".c_MiniCart__quantity")).toHaveText("2");
-    await expect(page.locator(".e_Recommendation_name")).toHaveText(
+    await expect(page.locator(".i_Recommendation_name")).toHaveText(
       RECOS["CL-01-GR"],
     );
     expect(await cartCookie(context)).toBe("CL-01-GR_2");
@@ -145,6 +145,6 @@ test.describe("shopping journey", () => {
     await page.goto("/checkout/cart");
     await expect(page.locator(".c_LineItem")).toHaveCount(0);
     await expect(page.locator(".c_CartPage__total")).toHaveText("Total: 0 Ø");
-    await expect(page.locator(".e_Recommendation_name")).toHaveText(RECOS[""]);
+    await expect(page.locator(".i_Recommendation_name")).toHaveText(RECOS[""]);
   });
 });

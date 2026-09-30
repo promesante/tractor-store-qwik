@@ -9,7 +9,23 @@ test.describe("explore pages", () => {
       "Classic Tractors",
       "Autonomous Tractors",
     ]);
-    await expect(page.locator(".e_Recommendation_name")).toHaveText(HOME_RECOS);
+    await expect(page.locator(".i_Recommendation_name")).toHaveText(HOME_RECOS);
+  });
+
+  test("home page does not jump while widgets load", async ({ page }) => {
+    const footerTop = () =>
+      page
+        .locator(".e_Footer")
+        .evaluate((el) => Math.round(el.getBoundingClientRect().top + scrollY));
+    await page.goto("/", { waitUntil: "commit" });
+    await page.locator(".e_Footer").waitFor();
+    // Measure after the Raleway font swap, which moves text by a pixel or two
+    // on its own. The test is about widgets, not fonts.
+    await page.evaluate(() => document.fonts.ready);
+    const before = await footerTop();
+    await expect(page.locator(".i_Recommendation_name")).toHaveCount(4);
+    await expect(page.locator(".c_MiniCart")).toBeVisible();
+    expect(await footerTop()).toBe(before);
   });
 
   test("category page lists all machines by price", async ({ page }) => {

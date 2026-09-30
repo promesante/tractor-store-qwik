@@ -5,10 +5,23 @@ import { openReady } from "./support";
 test.describe("widgets", () => {
   for (const [skus, expected] of Object.entries(RECOS)) {
     test(`recommendations for "${skus}"`, async ({ page }) => {
-      await page.goto(`/_fragment/explore/recommendations?skus=${skus}`);
-      await expect(page.locator(".e_Recommendation_name")).toHaveText(expected);
+      await page.goto(`/_fragment/inspire/recommendations?skus=${skus}`);
+      await expect(page.locator(".i_Recommendation_name")).toHaveText(expected);
+      await expect(page.locator(".i_Recommendations")).toHaveAttribute(
+        "data-boundary",
+        "inspire",
+      );
     });
   }
+
+  test("recommendations are owned by Team Inspire, not Explore", async ({
+    request,
+  }) => {
+    const res = await request.get(
+      "/_fragment/explore/recommendations?skus=CL-01-GR",
+    );
+    expect(res.status()).toBe(404);
+  });
 
   test("store picker selects a store and tells the page", async ({ page }) => {
     await openReady(page, "/_fragment/explore/store-picker", ["explore"]);

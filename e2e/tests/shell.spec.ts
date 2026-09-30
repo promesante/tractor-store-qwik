@@ -38,6 +38,7 @@ test.describe("shell", () => {
     await page.goto("/");
     const miniCart = page.locator(".c_MiniCart");
     await expect(miniCart).toBeVisible();
+    await expect(page.locator(".i_Recommendations")).toBeVisible();
 
     const outline = (selector: string) =>
       page
@@ -50,6 +51,7 @@ test.describe("shell", () => {
       ".e_Header",
       ".e_Footer",
       ".c_MiniCart",
+      ".i_Recommendations",
     ];
     for (const selector of boundaries) {
       expect(await outline(selector), selector).toBe("none");

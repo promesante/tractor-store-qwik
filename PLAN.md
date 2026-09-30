@@ -23,8 +23,8 @@ Tasks for building the store described in [spec.md](./spec.md).
 | T8   | Checkout: cart state, add to cart, mini cart      | T4, T5     | Done      |
 | T9   | Decide: product detail page                       | T7, T8     | Done      |
 | T10  | Checkout: cart, checkout and thank-you pages      | T7, T8     | Done      |
-| T11  | End-to-end tests in CI                            | T9, T10    | In review |
-| T12  | Bonus: Inspire team owns recommendations          | T11        | To do     |
+| T11  | End-to-end tests in CI                            | T9, T10    | Done      |
+| T12  | Bonus: Inspire team owns recommendations          | T11        | In review |
 | T13  | Docs: README, specs table, footer credits         | T11        | To do     |
 | T14  | Submit to the Tractor Store site                  | T3, T13    | To do     |
 
@@ -190,9 +190,15 @@ stock and recommendations.
 
 ### T12. Bonus: Inspire team owns recommendations
 
-- New `apps/inspire` Qwik City app and Worker.
-- Move the recommendations widget and its data from Explore to Inspire.
-- Update the gateway routes and embedding pages.
+- New `apps/inspire` Qwik City app and `tractor-inspire` Worker, on local port 3004, bound in the
+  shell as `INSPIRE`.
+- Move the recommendations widget, its algorithm, styles and data from Explore to Inspire. The
+  class prefix changes from `e_` to `i_`, and the boundary shows Inspire's purple.
+- Explore's home page, Decide's product page and Checkout's cart page embed
+  `/_fragment/inspire/recommendations`. Explore no longer answers for recommendations.
+- Explore reserves space for the home page recommendations and the header's mini cart.
+
+**Done when** the store looks and works as before, with recommendations served by Inspire.
 
 ### T13. Docs: README, specs table, footer credits
 

@@ -2,11 +2,11 @@
  * The blueprint's color-based recommendation algorithm: recommend the variants
  * whose color is closest to the average color of the given SKUs.
  */
-import { data, type RecoItem } from "~/data";
+import { recommendations, type RecoItem } from "~/data";
 
 type Rgb = number[];
 
-const items = data.recommendations;
+const items = recommendations;
 
 function averageColor(colors: Rgb[]): Rgb {
   const total = colors.reduce(

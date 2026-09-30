@@ -1,6 +1,6 @@
 import type { FragmentConfig } from "web-fragments/gateway";
 
-export type Team = "explore" | "decide" | "checkout";
+export type Team = "explore" | "decide" | "checkout" | "inspire";
 
 /**
  * Route patterns per team, in path-to-regexp syntax.
@@ -20,6 +20,8 @@ export const TEAM_ROUTES: Record<Team, string[]> = {
   // navigation, such as /product/CL-01/q-data.json.
   decide: ["/product/:_*", "/_fragment/decide/:_*"],
   checkout: ["/checkout/:_*", "/_fragment/checkout/:_*"],
+  // Team Inspire has no pages, only its recommendations widget.
+  inspire: ["/_fragment/inspire/:_*"],
 };
 
 /**

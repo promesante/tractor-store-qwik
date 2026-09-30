@@ -7,8 +7,8 @@ import { VariantOption } from "~/components/variant-option";
 /**
  * Team Decide's product page, /product/:id?sku=SKU.
  *
- * It embeds four widgets from other teams as Web Fragments: Explore's header,
- * recommendations and footer, and Checkout's add to cart. Changing the
+ * It embeds four widgets from other teams as Web Fragments: Explore's header
+ * and footer, Inspire's recommendations, and Checkout's add to cart. Changing the
  * variant is a client-side navigation: the page re-renders, and the widgets
  * that depend on the SKU are re-created with the new one, because a
  * <web-fragment> does not react to a changed src.
@@ -71,8 +71,8 @@ export default component$(() => {
         </div>
         <web-fragment
           key={`recommendations-${variant.sku}`}
-          fragment-id={`explore-recommendations-${variant.sku}`}
-          src={`/_fragment/explore/recommendations?skus=${variant.sku}`}
+          fragment-id={`inspire-recommendations-${variant.sku}`}
+          src={`/_fragment/inspire/recommendations?skus=${variant.sku}`}
         />
       </main>
       <web-fragment
